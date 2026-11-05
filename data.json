@@ -1578,27 +1578,27 @@
    "unique": false,
    "tool": null,
    "concept": "c_cli",
-   "status": "pendiente",
+   "status": "hecho",
    "acceptance": "El agente pide por WhatsApp los documentos que exige el propietario, comprueba tipo y legibilidad básica, y marca la solicitud completa solo cuando están todos.",
    "verification": "Automática",
    "suggested_test": "Prueba con documentos completos e incompletos.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:201"
+     "path": "AppPartaments/appartamentos-backend/tests/db/applicationsRatings.db.test.js",
+     "note": "Prueba #10: documentos completos, incompletos, rechazados (tipo y legibilidad), no pedidos y simultáneos; la solicitud solo queda completa con todos"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:428"
+     "path": "AppPartaments/appartamentos-backend/src/services/rentalApplications.js",
+     "note": "Documentos por propiedad, luego los del propietario, luego cédula + comprobante de ingresos; aviso al propietario al completarse"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/webhooks/whatsapp.js:88"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/clientPrompt.js:24"
+     "path": "AppPartaments/appartamentos-backend/src/services/mediaStorage.js",
+     "note": "Descarga de Twilio con autenticación, tipo real por los primeros bytes y legibilidad básica (tamaño, resolución, páginas del PDF)"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): No existe proceso de solicitud: no hay tablas ni lógica para los documentos que exige cada propietario, ni recepción y guardado de archivos (el adjunto entrante no se descarga ni se guarda), ni validación de tipo o legibilidad, ni estado 'solicitud completa'. Lo único relacionado es el consentimiento por WhatsApp para la verificación crediticia (VERIFICAR / NO VERIFICAR). Las referencias no se recogen: la columna users.references existe, pero nada la escribe."
+     "note": "Falta: vista en el panel, prueba con un adjunto real de Twilio y política de retención de los documentos. Sin Cloudinary configurado se guarda la URL de Twilio"
     }
    ],
    "verified_by": "",
@@ -1614,34 +1614,23 @@
    "unique": true,
    "tool": null,
    "concept": "c_cfg",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "El propietario configura precio mínimo, contrato mínimo, criterios, horario, tono y autonomía en una sola conversación; se guarda en agent_config y se aplica después.",
    "verification": "Automática + humana",
    "suggested_test": "Prueba de guardado y aplicación, más configuración con un propietario real.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/onboarding.js:178"
+     "path": "AppPartaments/appartamentos-backend/tests/db/ownerSetupReply.db.test.js",
+     "note": "Prueba #11: onboarding por webhook firmado con precio, contrato, criterios, horario, tono y autonomía; luego se aplican a la propiedad, a las visitas y a la negociación"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:127"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:117"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1633"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/onboarding.js:252"
+     "path": "AppPartaments/appartamentos-backend/src/utils/ownerConfig.js",
+     "note": "Autonomía en agent_config.autonomy_level (total / consultar / solo informar); criterios solo objetivos"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Avance en esta rama: horario de visitas (panel y WhatsApp), reporte mensual y aviso de renovación configurables. Falta configurar criterios de candidatos y autonomía en una sola conversación."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): El onboarding del propietario solo pide precio mínimo, meses mínimos de contrato y tono (onboarding.js:170-238). Faltan criterios de candidatos, horario de visitas y nivel de autonomía; la autonomía solo existe como slider del dashboard (PUT /users/agent-config) y ningún código la lee. De agent_config solo se aplica el tono, en el prompt del asistente del propietario. El motor A2A no usa min_price ni min_contract_months (toma properties.price_min/min_contract_months o 0,9×lista) y no se copian a las propiedades. El onboarding termina pidiendo registrar la propiedad por WhatsApp, pero OWNER_TOO"
+     "note": "Los criterios se guardan pero todavía no filtran candidatos: eso es la función 13, que espera revisión legal. Falta la configuración con un propietario real y el selector de autonomía en el panel"
     }
    ],
    "verified_by": "",
@@ -1657,34 +1646,27 @@
    "unique": true,
    "tool": null,
    "concept": "c_prop",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Cada consulta recibe respuesta en menos de 30 segundos, con el tono configurado y solo con información autorizada. Nunca revela el precio mínimo.",
    "verification": "Automática",
    "suggested_test": "Prueba de tiempo de respuesta y búsqueda del precio mínimo en las respuestas.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/clientPrompt.js:123"
+     "path": "AppPartaments/appartamentos-backend/tests/db/ownerSetupReply.db.test.js",
+     "note": "Prueba #12: con el modelo colgado la respuesta llega dentro del presupuesto y se mide; barrido de que el precio mínimo nunca llega al cliente; tono del propietario en la ficha"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:127"
+     "path": "AppPartaments/appartamentos-backend/src/services/claude.js",
+     "note": "Plazo total desde que llega el webhook (AGENT_REPLY_BUDGET_MS, 25 s), timeout por llamada con lo que queda y respuesta de espera si se agota"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/properties.js:114"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:208"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/services/claude.js:17"
+     "path": "AppPartaments/appartamentos-backend/src/routes/metrics.js",
+     "note": "Histograma app_agent_reply_seconds, respuestas de más de 30 s y degradadas"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Avance en esta rama: el precio mínimo ya no se puede deducir ni aparece en lo que recibe el cliente (#25). Falta medir y garantizar la respuesta en menos de 30 s."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): No hay presupuesto ni medición de la latencia de punta a punta. El tool-loop admite 4 iteraciones con timeout de 45 s y 3 reintentos por llamada, sin un límite de 30 s ni prueba de tiempo; A3.8 solo prueba el 200 del webhook. A los interesados les responde el agente del propio candidato con su propio tono (clientPrompt.js:123); el tono o la personalización del propietario o la inmobiliaria solo llegan al asistente del propietario. La información autorizada se filtra campo a campo (price_min, owner_criteria, agent_rules) y eso está probado. Aun así, el precio mínimo se puede deducir de la contr"
+     "note": "Falta medir con Anthropic y Twilio reales en producción"
     }
    ],
    "verified_by": "",
@@ -2326,30 +2308,23 @@
    "unique": true,
    "tool": null,
    "concept": "c_rep",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Tras una visita o contrato, ambas partes pueden calificarse, y la reputación se calcula solo con eventos verificados en la plataforma.",
    "verification": "Automática",
    "suggested_test": "Prueba de cálculo con eventos verificados y no verificados.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:14"
+     "path": "AppPartaments/appartamentos-backend/tests/db/applicationsRatings.db.test.js",
+     "note": "Prueba #31: calificaciones con eventos verificados y no verificados; la reputación solo cuenta las verificadas"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:48"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:101"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/services/scheduler.js:78"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:444"
+     "path": "AppPartaments/appartamentos-backend/src/services/partyRatings.js",
+     "note": "Verificada = visita completada o contrato firmado por los dos, entre exactamente esas dos personas; se recomprueba al calcular"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Hay cálculo semanal de tenant_scores y landlord_scores a partir de facturas, contratos y servicios, pero no se cumple el criterio. No existe calificación entre las partes tras una visita o contrato; solo se califica a proveedores de servicios. Los scores no se exponen en ninguna ruta ni en la UI (getTenantScore/getLandlordScore no se usan). El cálculo mezcla datos no pertinentes: el maintenance_score del inquilino usa las calificaciones que él dio a proveedores y asume 50 si no hay datos; el tenant_reviews del propietario usa ratings de servicios. No distingue eventos verificados de no verific"
+     "note": "Se califica por WhatsApp (rate_party) y por la API; falta la vista en el panel"
     }
    ],
    "verified_by": "",
