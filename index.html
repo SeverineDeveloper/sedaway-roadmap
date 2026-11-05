@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa de Appartamentos</title>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --text: #1f1e1b;
+    --muted: #6b6860;
+    --border: #e2dfd6;
+    --link: #b9b5aa;
+    --accent: #2f5fd0;
+    --conflict: #d23c3c;
+    --halo: #f7f6f2;
+    --c-fund: #7a4fd6;
+    --c-func: #2f7fd0;
+    --c-tech: #1a9a7a;
+    --c-etapa: #d98a1c;
+    --c-doc: #7d7a70;
+    --c-emp: #c4487e;
+    --s-gris: #9a978e;
+    --s-hecho: #2e9b4f;
+    --s-parcial: #d19a1a;
+    --s-pendiente: #d23c3c;
+    --s-verificado: #1f6feb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17171a;
+      --surface: #212126;
+      --text: #ecebe7;
+      --muted: #a09d95;
+      --border: #34343b;
+      --link: #55545c;
+      --accent: #7ea2ff;
+      --conflict: #ff6b6b;
+      --halo: #17171a;
+      --c-fund: #a98bff;
+      --c-func: #66aef5;
+      --c-tech: #4fcfa9;
+      --c-etapa: #f0b04f;
+      --c-doc: #a9a69c;
+      --c-emp: #ee7fb0;
+      --s-verificado: #58a6ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+  }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+    padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface);
+  }
+  header h1 { font-size: 16px; margin: 0 8px 0 0; font-weight: 650; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .seg button {
+    border: 0; background: transparent; color: var(--text); padding: 6px 12px; font: inherit; cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  input[type="search"] {
+    font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); color: var(--text); min-width: 200px; flex: 1 1 200px; max-width: 320px;
+  }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 12.5px;
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); cursor: pointer;
+  }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .chip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
+  .chip .n { color: var(--muted); }
+  main { display: grid; grid-template-columns: 1fr 380px; min-height: 0; }
+  #graph { position: relative; min-height: 0; overflow: hidden; }
+  svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  svg:active { cursor: grabbing; }
+  .link { stroke: var(--link); stroke-width: 1.1; }
+  .link.conflict { stroke: var(--conflict); stroke-width: 1.8; stroke-dasharray: 5 4; }
+  .node circle { stroke: var(--surface); stroke-width: 1.5; cursor: pointer; }
+  .node text {
+    font-size: 11px; fill: var(--text); paint-order: stroke; stroke: var(--halo);
+    stroke-width: 3px; stroke-linejoin: round; pointer-events: none;
+  }
+  .node.big text { font-weight: 600; font-size: 12px; }
+  .node:focus { outline: none; }
+  .node:focus-visible circle, .node.selected circle { stroke: var(--text); stroke-width: 2.5; }
+  .dim { opacity: .12; }
+  .link.dim { opacity: .05; }
+  .colhead { font-size: 13px; font-weight: 650; fill: var(--muted); text-anchor: middle; letter-spacing: .02em; }
+  #msg { position: absolute; inset: 0; display: none; place-items: center; padding: 24px; text-align: center; color: var(--muted); }
+  #panel {
+    border-left: 1px solid var(--border); background: var(--surface);
+    overflow-y: auto; padding: 16px 18px 28px;
+  }
+  #panel h2 { font-size: 17px; margin: 4px 0 6px; }
+  #panel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 20px 0 8px; }
+  #panel h4 { font-size: 13px; margin: 12px 0 4px; color: var(--muted); font-weight: 600; }
+  #panel p { margin: 6px 0; }
+  .muted { color: var(--muted); }
+  .layer-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  .layer-tag .dot { width: 9px; height: 9px; border-radius: 50%; }
+  ul.plain { list-style: none; padding: 0; margin: 0; }
+  ul.plain li { margin: 2px 0; }
+  .linkbtn {
+    font: inherit; text-align: left; background: none; border: 0; padding: 3px 4px; margin: 0 -4px;
+    color: var(--accent); cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .linkbtn:hover { background: var(--bg); }
+  .linkbtn .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .stage { display: flex; flex-direction: column; align-items: flex-start; margin: 0 0 6px !important; }
+  .stage .count { color: var(--muted); font-size: 12.5px; padding-left: 14px; }
+  .conflict-card {
+    border: 1px solid var(--border); border-left: 3px solid var(--conflict);
+    border-radius: 6px; padding: 8px 10px; margin: 8px 0; font-size: 13px;
+  }
+  .conflict-card .rel { color: var(--conflict); font-weight: 600; }
+  .status {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px;
+    padding: 2px 9px; border-radius: 999px; border: 1px solid var(--border);
+  }
+  .status .dot { width: 8px; height: 8px; border-radius: 50%; }
+  a.ext { color: var(--accent); }
+  .back { font-size: 12.5px; }
+  button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .feat { list-style: none; padding: 0; margin: 0; }
+  .feat li { display: flex; gap: 8px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .feat .num { font-variant-numeric: tabular-nums; color: var(--muted); min-width: 1.6em; }
+  .feat .fname { flex: 1; }
+  .feat .stg { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .star { color: var(--c-etapa); }
+  .tag-posponer {
+    display: inline-block; font-size: 11px; padding: 0 6px; border-radius: 999px;
+    border: 1px dashed var(--s-parcial); color: var(--s-parcial); white-space: nowrap;
+  }
+  #roadmap { position: absolute; inset: 0; display: none; overflow-y: auto; overflow-x: hidden; padding: 14px 16px 24px; }
+  /* Las columnas se reparten el ancho disponible; si no caben las seis, pasan a una segunda fila en vez de desplazar */
+  .rm-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; align-items: start; }
+  .rm-col { min-width: 0; }
+  .rm-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+  .rm-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .rm-legend i, .card .sdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+  .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--border); margin: 0 0 10px; }
+  .bar span { height: 100%; }
+  .rm-col h3 { font-size: 13px; margin: 0 0 6px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 6px; }
+  .rm-col h3 .n { color: var(--muted); font-weight: 400; }
+  .card {
+    display: block; width: 100%; text-align: left; font: inherit; color: var(--text); cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 7px 8px; margin: 0 0 8px; border-left: 3px solid var(--c-func); overflow-wrap: anywhere;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card.selected { outline: 2px solid var(--accent); }
+  .card.dim { opacity: .3; }
+  .card .top { display: flex; justify-content: space-between; gap: 6px; font-size: 11.5px; color: var(--muted); line-height: 1.3; }
+  .card .title { font-size: 12.5px; font-weight: 600; margin: 2px 0 4px; line-height: 1.3; }
+  .card .meta { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; font-size: 11.5px; color: var(--muted); }
+  .chip .letter { font-weight: 700; color: var(--accent); }
+  [hidden] { display: none !important; }
+  #rmfilters { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  #filterpanel { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  .ftoggle { padding: 6px 12px; font-size: 13.5px; }
+  .ftoggle .caret { display: inline-block; transition: transform .15s; }
+  .ftoggle[aria-expanded="true"] .caret { transform: rotate(180deg); }
+  .ftoggle .fcount { color: var(--accent); font-weight: 600; }
+  .freset { font-size: 12.5px; align-self: flex-start; }
+  .flabel { font-size: 12px; color: var(--muted); align-self: center; margin-right: 2px; }
+  .card.current { outline: 3px solid var(--accent); }
+  .ver { font-size: 12px; cursor: default; }
+  .feat .fbtn { all: unset; cursor: pointer; display: flex; gap: 8px; align-items: baseline; width: 100%; }
+  .feat .fbtn:hover .fname, .feat .fbtn:focus-visible .fname { color: var(--accent); }
+  .feat .fbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .feat li.current { background: var(--bg); }
+  .feat .sdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; align-self: center; }
+  .crit { border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; padding: 10px 12px; margin: 8px 0 4px; font-size: 13px; }
+  .crit dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; margin: 8px 0 0; }
+  .crit dt { color: var(--muted); }
+  .crit dd { margin: 0; }
+  .crit ul { margin: 0; padding-left: 16px; }
+  .crit code { font-size: 12px; }
+  .warn { color: var(--s-pendiente); font-size: 12.5px; }
+  .progress-text { font-size: 13px; margin: 2px 0 6px; }
+  @media (max-width: 820px) {
+    body { overflow: auto; display: block; }
+    main { grid-template-columns: 1fr; }
+    #graph { height: 62vh; border-bottom: 1px solid var(--border); }
+    #panel { border-left: 0; }
+    input[type="search"] { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Mapa de Appartamentos</h1>
+  <div class="seg" role="group" aria-label="Vista">
+    <button type="button" data-view="layers" aria-pressed="true">Por capas</button>
+    <button type="button" data-view="free" aria-pressed="false">Mapa libre</button>
+    <button type="button" data-view="roadmap" aria-pressed="false">Roadmap</button>
+  </div>
+  <input type="search" id="search" placeholder="Buscar por nombre o descripción…" aria-label="Buscar nodos">
+  <button type="button" class="chip ftoggle" id="ftoggle" aria-expanded="false" aria-controls="filterpanel">
+    Filtros<span class="fcount" id="fcount"></span> <span class="caret" aria-hidden="true">▾</span>
+  </button>
+  <div id="filterpanel" hidden>
+  <div class="filters" id="filters" role="group" aria-label="Filtrar por capa"></div>
+  <div id="rmfilters" hidden>
+    <div class="filters" id="catfilters" role="group" aria-label="Filtrar por categoría del catálogo"></div>
+    <div class="filters" id="scopefilters" role="group" aria-label="Filtrar por alcance"><span class="flabel">Alcance</span></div>
+    <div class="filters" id="verfilters" role="group" aria-label="Filtrar por tipo de verificación"><span class="flabel">Verificación</span></div>
+  </div>
+  <button type="button" class="linkbtn freset" id="freset" hidden>Quitar filtros</button>
+  </div>
+</header>
+<main>
+  <div id="graph">
+    <svg id="svg" role="img" aria-label="Grafo del proyecto. Usa Tab para recorrer los nodos y Enter para seleccionarlos."></svg>
+    <div id="roadmap" aria-label="Funciones del catálogo por etapa"></div>
+    <div id="msg"></div>
+  </div>
+  <aside id="panel" aria-live="polite"></aside>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(async function () {
+  const msg = document.getElementById("msg");
+  const showMsg = (html) => { msg.innerHTML = html; msg.style.display = "grid"; };
+
+  if (typeof d3 === "undefined") {
+    showMsg("No se pudo cargar D3 desde cdnjs. Revisa la conexión a internet.");
+    return;
+  }
+
+  let data;
+  try {
+    const res = await fetch("data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    data = await res.json();
+  } catch (e) {
+    showMsg("<div>No se pudo cargar <code>data.json</code>.<br>Sirve la carpeta con un servidor local:<br><br><code>cd mapa &amp;&amp; python3 -m http.server 8745</code><br><br>y abre http://localhost:8745</div>");
+    return;
+  }
+
+  // ---------- Modelo ----------
+  const types = data.types;
+  const typeIndex = new Map(types.map((t, i) => [t.id, i]));
+  const typeName = new Map(types.map((t) => [t.id, t.name]));
+  const color = (type) => `var(--c-${type})`;
+  const STATUS_COLOR = {
+    "verificado": "var(--s-verificado)", "hecho": "var(--s-hecho)", "parcial": "var(--s-parcial)",
+    "pendiente": "var(--s-pendiente)", "sin analizar": "var(--s-gris)"
+  };
+  const nodes = data.nodes.map((n) => ({ ...n }));
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const links = data.links.map((l) => ({ ...l, source: byId.get(l.source), target: byId.get(l.target) }));
+  const isBig = (n) => n.type === "fund" || n.type === "etapa";
+  const radius = (n) => (isBig(n) ? 11 : 7);
+
+  const neighbors = new Map(nodes.map((n) => [n.id, new Set([n.id])]));
+  links.forEach((l) => {
+    neighbors.get(l.source.id).add(l.target.id);
+    neighbors.get(l.target.id).add(l.source.id);
+  });
+
+  const etapas = nodes.filter((n) => n.type === "etapa").sort((a, b) => a.order - b.order);
+  const PLAN_RELS = new Set(["planificado en", "propuesto para"]);
+  const piecesOf = (etapaId) =>
+    links.filter((l) => l.target.id === etapaId && PLAN_RELS.has(l.relation)).map((l) => l.source);
+  // Para ordenar funciones y tecnologías dentro de su columna según su etapa
+  const stageOrder = new Map();
+  links.forEach((l) => {
+    if (l.target.type === "etapa" && PLAN_RELS.has(l.relation)) {
+      const prev = stageOrder.get(l.source.id) ?? 99;
+      stageOrder.set(l.source.id, Math.min(prev, l.target.order));
+    }
+  });
+
+  const conflicts = links.filter((l) => l.conflict);
+
+  // Funciones del Catálogo de Servicios: no son nodos, cuelgan de un concepto del grafo
+  const features = data.features || [];
+  const featuresByConcept = d3.group(features, (f) => f.concept);
+  const STAGES = ["1.1", "1.2", "2.0", "2.1", "3.0", "Continua"];
+  // Etapas del grafo ↔ etapas del catálogo (la 2.1 y «Continua» solo existen en el catálogo)
+  const STAGE_OF_ORDER = { 1: "1.1", 2: "1.2", 3: "2.0", 4: "3.0" };
+  // Orden de las barras: de lo más avanzado a lo menos
+  const STATUSES = [
+    ["verificado", "verificadas"], ["hecho", "hechas"], ["parcial", "parciales"], ["pendiente", "pendientes"], ["sin analizar", "sin analizar"]
+  ];
+  const POSPONER = "Propuesta: posponer";
+  // «verificado» exige confirmación humana (verified_by y verified_at), también en las funciones automáticas
+  const unconfirmed = (f) => f.status === "verificado" && !(f.verified_by && f.verified_at);
+  const statusOf = (x) => {
+    if (x.status === "pendiente de análisis" || !STATUS_COLOR[x.status]) return "sin analizar";
+    return unconfirmed(x) ? "hecho" : x.status;
+  };
+  const isDone = (f) => ["hecho", "verificado"].includes(statusOf(f));
+  const needsHuman = (f) => /humana/i.test(f.verification || "");
+  const verIcon = (f) => needsHuman(f)
+    ? `<span class="ver" title="${esc(f.verification)}: requiere confirmación humana" aria-label="Requiere confirmación humana">👤</span>`
+    : `<span class="ver" title="Verificación automática" aria-label="Verificación automática">⚙︎</span>`;
+  // Progreso de un concepto o etapa a partir de sus funciones; las marcadas para posponer no cuentan
+  function progressOf(fs) {
+    const counted = fs.filter((f) => f.scope !== POSPONER);
+    return { counted, done: counted.filter(isDone).length, later: fs.length - counted.length };
+  }
+  const categories = Array.from(d3.group(features, (f) => f.category), ([id, fs]) => ({ id, name: fs[0].category_name, n: fs.length }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+
+  // ---------- Estado ----------
+  const state = {
+    view: "layers", hidden: new Set(), hiddenCats: new Set(), hiddenScopes: new Set(), hiddenVers: new Set(),
+    query: "", selected: null, feature: null
+  };
+
+  // ---------- SVG ----------
+  const svg = d3.select("#svg");
+  const root = svg.append("g");
+  const gHeads = root.append("g");
+  const gLinks = root.append("g");
+  const gNodes = root.append("g");
+  const zoom = d3.zoom().scaleExtent([0.15, 4]).on("zoom", (e) => root.attr("transform", e.transform));
+  svg.call(zoom).on("dblclick.zoom", null);
+  svg.on("click", (e) => {
+    if (e.target === svg.node()) select(null);
+  });
+
+  // Varias conexiones entre el mismo par de nodos (p. ej. una relación y un conflicto) se dibujan
+  // como curvas separadas para que ninguna quede oculta bajo otra
+  const pairKey = (l) => [l.source.id, l.target.id].sort().join("|");
+  d3.groups(links, pairKey).forEach(([, ls]) => {
+    ls.forEach((l, i) => { l.bend = ls.length > 1 ? (i - (ls.length - 1) / 2) : 0; });
+  });
+  const linkSel = gLinks.selectAll("path").data(links).join("path")
+    .attr("fill", "none")
+    .attr("class", (d) => "link" + (d.conflict ? " conflict" : ""));
+  linkSel.append("title").text((d) => `${d.source.name} → ${d.relation} → ${d.target.name}${d.why ? "\n" + d.why : ""}`);
+
+  const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+  const nodeSel = gNodes.selectAll("g").data(nodes, (d) => d.id).join("g")
+    .attr("class", (d) => "node" + (isBig(d) ? " big" : ""))
+    .attr("tabindex", 0)
+    .attr("role", "button")
+    .attr("aria-label", (d) => `${typeName.get(d.type)}: ${d.name}`);
+  nodeSel.append("circle").attr("r", radius).style("fill", (d) => color(d.type));
+  nodeSel.append("text").attr("x", (d) => radius(d) + 5).attr("dy", "0.35em").text((d) => trunc(d.name, 30));
+  nodeSel.append("title").text((d) => `${d.name}\n${d.description}`);
+
+  nodeSel.on("click", (e, d) => { e.stopPropagation(); select(d.id); })
+    .on("keydown", (e, d) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(d.id); }
+      if (e.key === "Escape") select(null);
+    });
+
+  const drag = d3.drag().clickDistance(4)
+    .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
+    .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; });
+  nodeSel.call(drag);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && state.selected) select(null);
+  });
+
+  // ---------- Layout ----------
+  const COL_W = 250, ROW = 34;
+  const layerTargets = new Map();
+  let headerY = 0;
+  function computeLayerTargets() {
+    layerTargets.clear();
+    const visibleTypes = types.filter((t) => !state.hidden.has(t.id));
+    const cols = visibleTypes.map((t) => {
+      const list = nodes.filter((n) => n.type === t.id);
+      if (t.id === "etapa") list.sort((a, b) => a.order - b.order);
+      else list.sort((a, b) => (stageOrder.get(a.id) ?? 99) - (stageOrder.get(b.id) ?? 99));
+      return { t, list };
+    });
+    const maxN = d3.max(cols, (c) => c.list.length) || 1;
+    const span = (maxN - 1) * ROW;
+    headerY = -span / 2 - 46;
+    cols.forEach((c, ci) => {
+      const x = (ci - (cols.length - 1) / 2) * COL_W;
+      const n = c.list.length;
+      const step = n > 1 ? Math.min(90, span / (n - 1)) : 0;
+      c.list.forEach((node, i) => layerTargets.set(node.id, { x, y: (i - (n - 1) / 2) * step }));
+      c.x = x;
+    });
+    gHeads.selectAll("text").data(state.view === "layers" ? cols : [], (c) => c.t.id).join("text")
+      .attr("class", "colhead").attr("x", (c) => c.x + 30).attr("y", headerY).text((c) => c.t.name);
+  }
+
+  const linkForce = d3.forceLink().id((d) => d.id);
+  const sim = d3.forceSimulation().on("tick", ticked).on("end", () => { if (pendingFit) { fit(); pendingFit = false; } });
+  let pendingFit = true;
+
+  function linkPath(d) {
+    const { x: x1, y: y1 } = d.source, { x: x2, y: y2 } = d.target;
+    if (!d.bend) return `M${x1},${y1}L${x2},${y2}`;
+    // Orientación canónica del par, para que los desvíos no se anulen cuando las conexiones van en sentidos opuestos
+    const flip = d.source.id > d.target.id ? -1 : 1;
+    const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1;
+    const off = d.bend * flip * Math.min(40, len * 0.25);
+    const cx = (x1 + x2) / 2 - (dy / len) * off, cy = (y1 + y2) / 2 + (dx / len) * off;
+    return `M${x1},${y1}Q${cx},${cy} ${x2},${y2}`;
+  }
+
+  function ticked() {
+    linkSel.attr("d", linkPath);
+    nodeSel.attr("transform", (d) => `translate(${d.x},${d.y})`);
+  }
+
+  function visibleNodes() { return nodes.filter((n) => !state.hidden.has(n.type)); }
+  function visibleLinks() { return links.filter((l) => !state.hidden.has(l.source.type) && !state.hidden.has(l.target.type)); }
+
+  function applyLayout() {
+    if (state.view === "roadmap") return; // el grafo está oculto; se recalcula al volver a una vista de grafo
+    const vn = visibleNodes(), vl = visibleLinks();
+    nodeSel.style("display", (d) => (state.hidden.has(d.type) ? "none" : null));
+    linkSel.style("display", (d) => (state.hidden.has(d.source.type) || state.hidden.has(d.target.type) ? "none" : null));
+    computeLayerTargets();
+    sim.nodes(vn);
+    linkForce.links(vl);
+    if (state.view === "layers") {
+      vn.forEach((n) => { if (n.x === undefined) { const t = layerTargets.get(n.id); n.x = t.x; n.y = t.y; } });
+      sim.force("link", linkForce.strength(0))
+        .force("charge", null)
+        .force("x", d3.forceX((d) => layerTargets.get(d.id).x).strength(0.9))
+        .force("y", d3.forceY((d) => layerTargets.get(d.id).y).strength(0.9))
+        .force("collide", d3.forceCollide((d) => radius(d) + 4));
+    } else {
+      sim.force("link", linkForce.distance(95).strength(0.3))
+        .force("charge", d3.forceManyBody().strength(-520))
+        .force("x", d3.forceX(0).strength(0.05))
+        .force("y", d3.forceY(0).strength(0.05))
+        .force("collide", d3.forceCollide((d) => radius(d) + 16));
+    }
+    sim.alpha(1).restart();
+    // En capas las posiciones finales se conocen de antemano; en el mapa libre se encuadra al estabilizarse
+    if (state.view === "layers") { pendingFit = false; fit(true); } else { pendingFit = true; setTimeout(() => fit(), 900); }
+  }
+
+  function fit(useTargets) {
+    const vn = visibleNodes().map((d) => (useTargets ? { ...d, ...layerTargets.get(d.id) } : d));
+    if (!vn.length) return;
+    const box = svg.node().getBoundingClientRect();
+    // Con el grafo oculto (vista Roadmap) o sin tamaño todavía, encuadrar daría escala 0 y transformaciones NaN
+    if (state.view === "roadmap" || box.width < 1 || box.height < 1) return;
+    let x0 = d3.min(vn, (d) => d.x) - 20, x1 = d3.max(vn, (d) => d.x) + 200;
+    let y0 = d3.min(vn, (d) => d.y) - 20, y1 = d3.max(vn, (d) => d.y) + 20;
+    if (state.view === "layers") y0 = Math.min(y0, headerY - 20);
+    const k = Math.min(2, 0.95 * Math.min(box.width / (x1 - x0), box.height / (y1 - y0)));
+    const t = d3.zoomIdentity.translate(box.width / 2, box.height / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
+    svg.transition().duration(450).call(zoom.transform, t);
+  }
+
+  // ---------- Resaltado ----------
+  function matches(n) {
+    if (!state.query) return true;
+    const q = norm(state.query);
+    return norm(n.name).includes(q) || norm(n.description || "").includes(q);
+  }
+  function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+
+  function refreshHighlight() {
+    refreshCards();
+    const nb = state.selected ? neighbors.get(state.selected) : null;
+    const nodeDim = (n) => (state.query && !matches(n)) || (nb && !nb.has(n.id));
+    nodeSel.classed("dim", nodeDim).classed("selected", (d) => d.id === state.selected);
+    linkSel.classed("dim", (l) => {
+      if (nb) return !(l.source.id === state.selected || l.target.id === state.selected);
+      return nodeDim(l.source) || nodeDim(l.target);
+    });
+  }
+
+  // ---------- Panel ----------
+  const panel = document.getElementById("panel");
+  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+  const nodeBtn = (n) =>
+    `<button type="button" class="linkbtn" data-goto="${esc(n.id)}"><span class="dot" style="background:${color(n.type)}"></span>${esc(n.name)}</button>`;
+  const conflictCard = (l) =>
+    `<div class="conflict-card">${nodeBtn(l.source)} <span class="rel">${esc(l.relation)}</span> ${nodeBtn(l.target)}<p>${esc(l.why)}</p></div>`;
+
+  const statusDot = (f) => `<i class="sdot" style="background:${STATUS_COLOR[statusOf(f)]}" title="Estado: ${esc(statusOf(f))}" aria-label="Estado: ${esc(statusOf(f))}"></i>`;
+  const featureList = (fs) => `<ul class="feat">${fs.map((f) => `
+      <li class="${f.number === state.feature ? "current" : ""}"><button type="button" class="fbtn" data-feature="${esc(f.number)}">
+      <span class="num">${esc(f.number)}</span>
+      <span class="fname">${esc(f.name)}${f.unique ? ' <span class="star" title="Diferenciador único">★</span>' : ""}${f.scope_note ? ` <span class="tag-posponer">${esc(f.scope_note)}</span>` : ""}</span>
+      ${statusDot(f)}${verIcon(f)}
+      <span class="stg">${esc(f.stage)}</span></button></li>`).join("")}</ul>`;
+
+  function progressBlock(fs) {
+    const { counted, done, later } = progressOf(fs);
+    const segs = STATUSES.map(([k]) => {
+      const n = counted.filter((f) => statusOf(f) === k).length;
+      return n ? `<span style="width:${(100 * n) / counted.length}%;background:${STATUS_COLOR[k]}"></span>` : "";
+    }).join("");
+    const detail = STATUSES.map(([k, label]) => [counted.filter((f) => statusOf(f) === k).length, label]).filter(([n]) => n).map(([n, l]) => `${n} ${l}`).join(" · ");
+    return `<p class="progress-text"><strong>${done} de ${counted.length}</strong> funciones hechas${later ? ` <span class="muted">(${later} a posponer no cuentan)</span>` : ""}</p>
+      ${counted.length ? `<div class="bar" role="img" aria-label="${esc(detail)}" title="${esc(detail)}">${segs}</div><p class="muted" style="font-size:12px">${esc(detail)}</p>` : ""}`;
+  }
+
+  function criterionBlock(f) {
+    const ev = (f.evidence || []).map((e) => typeof e === "string" ? e
+      : `${e.path || ""}${e.line ? ":" + e.line : ""}${e.note ? " — " + e.note : ""}`);
+    const st = statusOf(f);
+    return `<h3>Criterio de aceptación</h3>
+      <div class="crit">
+        <p><strong>${esc(f.number)} · ${esc(f.name)}</strong>${f.unique ? ' <span class="star">★</span>' : ""}</p>
+        <p>${esc(f.acceptance || "Sin criterio definido.")}</p>
+        <dl>
+          <dt>Estado</dt><dd><span class="status"><span class="dot" style="background:${STATUS_COLOR[st]}"></span>${esc(st)}</span>
+            ${unconfirmed(f) ? '<div class="warn">Marcada «verificado» sin confirmación humana: se cuenta como «hecho» hasta llenar verified_by y verified_at.</div>' : ""}</dd>
+          <dt>Verificación</dt><dd>${verIcon(f)} ${esc(f.verification || "—")}</dd>
+          <dt>Prueba sugerida</dt><dd>${esc(f.suggested_test || "—")}</dd>
+          <dt>Alcance</dt><dd>${esc(f.scope || "—")} · Etapa ${esc(f.stage)}</dd>
+          <dt>Evidencia</dt><dd>${ev.length ? `<ul>${ev.map((x) => `<li><code>${esc(x)}</code></li>`).join("")}</ul>` : '<span class="muted">Sin evidencia todavía; se llena al analizar el código.</span>'}</dd>
+          <dt>Confirmación</dt><dd>${f.verified_by ? `${esc(f.verified_by)} · ${esc(f.verified_at)}` : '<span class="muted">Sin confirmación humana</span>'}</dd>
+        </dl>
+      </div>`;
+  }
+
+  function renderSummary() {
+    const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+    const roadmap = STAGES.map((st) => {
+      const etapa = etapas.find((e) => STAGE_OF_ORDER[e.order] === st);
+      const fs = features.filter((f) => f.stage === st);
+      const later = fs.filter((f) => f.scope_note).length;
+      const parts = [];
+      if (etapa) parts.push(plural(piecesOf(etapa.id).length, "concepto", "conceptos"));
+      parts.push(plural(fs.length, "función", "funciones") + (later ? ` (${later} a posponer)` : ""));
+      const label = etapa ? nodeBtn(etapa)
+        : `<span class="muted" style="padding:3px 0">${st === "Continua" ? "Continua" : "Etapa " + esc(st)} <small>(solo en el catálogo)</small></span>`;
+      return `<li class="stage">${label}<span class="count">${parts.join(" · ")}</span></li>`;
+    }).join("");
+    panel.innerHTML = `
+      <h2>Cómo leer el mapa</h2>
+      <p>Cada punto es una pieza del proyecto Appartamentos; el color indica su capa. Los <strong>fundamentos</strong> se concretan en <strong>funciones</strong>, que usan <strong>tecnologías</strong> y están planificadas en <strong>etapas del roadmap</strong>. Los <strong>documentos</strong> describen cada pieza y la capa de <strong>empresa y legal</strong> muestra quién es dueño de qué.</p>
+      <p class="muted">Haz clic (o Tab + Enter) en un nodo para ver su detalle y sus conexiones. Clic en el fondo o Esc para volver aquí. Las líneas <span style="color:var(--conflict)">rojas punteadas</span> son contradicciones entre documentos.</p>
+      <p class="muted">${nodes.length} nodos · ${links.length} conexiones · ${features.length} funciones del catálogo (vista Roadmap)</p>
+      <h3>Roadmap</h3>
+      <ul class="plain">${roadmap}</ul>
+      <h3>Puntos por revisar (${conflicts.length})</h3>
+      ${conflicts.map(conflictCard).join("")}`;
+  }
+
+  function renderNode(n) {
+    const out = links.filter((l) => l.source.id === n.id);
+    const inc = links.filter((l) => l.target.id === n.id);
+    const group = (arr, pick) => d3.groups(arr, (l) => l.relation)
+      .map(([rel, ls]) => `<h4>${esc(rel)}</h4><ul class="plain">${ls.map((l) => `<li>${nodeBtn(pick(l))}</li>`).join("")}</ul>`).join("");
+    const myConflicts = conflicts.filter((l) => l.source.id === n.id || l.target.id === n.id);
+    const myFeatures = featuresByConcept.get(n.id) || [];
+    // Con funciones del catálogo, el estado del concepto es el progreso de sus funciones; sin ellas, conserva el suyo
+    const status = !(n.type === "func" || n.type === "tech") ? ""
+      : myFeatures.length ? `<h3>Estado en código</h3>${progressBlock(myFeatures)}`
+      : `<h3>Estado en código</h3><span class="status"><span class="dot" style="background:${STATUS_COLOR[statusOf(n)]}"></span>${esc(statusOf(n))}</span>`;
+    const current = myFeatures.find((f) => f.number === state.feature);
+    panel.innerHTML = `
+      <button type="button" class="linkbtn back" data-goto="">← Volver al resumen</button>
+      <p class="layer-tag"><span class="dot" style="background:${color(n.type)}"></span>${esc(typeName.get(n.type))}</p>
+      <h2>${esc(n.name)}</h2>
+      <p>${esc(n.description)}</p>
+      ${n.url ? `<p><a class="ext" href="${esc(n.url)}" target="_blank" rel="noopener noreferrer">Abrir en Google Drive ↗</a></p>` : ""}
+      ${current ? criterionBlock(current) : ""}
+      ${status}
+      ${myFeatures.length ? `<h3>Funciones del catálogo (${myFeatures.length})</h3><p class="muted" style="font-size:12px">👤 requiere confirmación humana · ⚙︎ automática. Toca una función para ver su criterio.</p>${featureList(myFeatures)}` : ""}
+      ${myConflicts.length ? `<h3>Conflictos (${myConflicts.length})</h3>${myConflicts.map(conflictCard).join("")}` : ""}
+      ${out.length ? `<h3>Conexiones salientes</h3>${group(out, (l) => l.target)}` : ""}
+      ${inc.length ? `<h3>Conexiones entrantes</h3>${group(inc, (l) => l.source)}` : ""}`;
+  }
+
+  panel.addEventListener("click", (e) => {
+    const fb = e.target.closest("[data-feature]");
+    if (fb) { select(state.selected, fb.dataset.feature); return; }
+    const b = e.target.closest("[data-goto]");
+    if (!b) return;
+    const id = b.getAttribute("data-goto");
+    if (id && state.hidden.has(byId.get(id).type)) toggleLayer(byId.get(id).type);
+    select(id || null);
+    if (id) gNodes.selectAll("g").filter((d) => d.id === id).node()?.focus({ preventScroll: true });
+  });
+
+  function select(id, featureNum = null) {
+    state.selected = id;
+    state.feature = featureNum;
+    if (id) renderNode(byId.get(id)); else renderSummary();
+    panel.scrollTop = 0;
+    refreshHighlight();
+  }
+
+  // ---------- Controles ----------
+  const filters = d3.select("#filters").selectAll("button").data(types).join("button")
+    .attr("type", "button").attr("class", "chip").attr("aria-pressed", "true")
+    .html((t) => `<span class="dot" style="background:${color(t.id)}"></span>${esc(t.name)} <span class="n">${nodes.filter((n) => n.type === t.id).length}</span>`)
+    .on("click", (e, t) => toggleLayer(t.id));
+
+  function toggleLayer(id) {
+    if (state.hidden.has(id)) state.hidden.delete(id); else state.hidden.add(id);
+    filters.attr("aria-pressed", (t) => String(!state.hidden.has(t.id)));
+    if (state.selected && state.hidden.has(byId.get(state.selected).type)) select(null);
+    updateFilterToggle();
+    applyLayout();
+  }
+
+  const roadmapEl = document.getElementById("roadmap");
+  const catFilters = d3.select("#catfilters").selectAll("button").data(categories).join("button")
+    .attr("type", "button").attr("class", "chip").attr("aria-pressed", "true")
+    .attr("title", (c) => c.name)
+    .html((c) => `<span class="letter">${esc(c.id)}</span>${esc(c.name)} <span class="n">${c.n}</span>`)
+    .on("click", (e, c) => {
+      if (state.hiddenCats.has(c.id)) state.hiddenCats.delete(c.id); else state.hiddenCats.add(c.id);
+      catFilters.attr("aria-pressed", (x) => String(!state.hiddenCats.has(x.id)));
+      updateFilterToggle();
+      renderRoadmap();
+    });
+
+  // Filtros por alcance y por tipo de verificación (solo los tipos que existen en los datos)
+  const SCOPE_LABEL = { "Núcleo": "Núcleo", "Planificado": "Planificado", [POSPONER]: "Posponer", "Solo para EE.UU.": "Solo EE.UU." };
+  const scopes = Object.keys(SCOPE_LABEL).map((id) => ({ id, n: features.filter((f) => f.scope === id).length })).filter((x) => x.n);
+  const verTypes = Array.from(d3.group(features, (f) => f.verification), ([id, fs]) => ({ id, n: fs.length }))
+    .filter((x) => x.id).sort((a, b) => a.id.localeCompare(b.id));
+  function chipFilter(sel, items, hiddenSet, html) {
+    const chips = d3.select(sel).selectAll("button").data(items).join("button")
+      .attr("type", "button").attr("class", "chip").attr("aria-pressed", "true").html(html)
+      .on("click", (e, x) => {
+        if (hiddenSet.has(x.id)) hiddenSet.delete(x.id); else hiddenSet.add(x.id);
+        chips.attr("aria-pressed", (y) => String(!hiddenSet.has(y.id)));
+        updateFilterToggle();
+        renderRoadmap();
+      });
+  }
+  chipFilter("#scopefilters", scopes, state.hiddenScopes, (x) => `${esc(SCOPE_LABEL[x.id])} <span class="n">${x.n}</span>`);
+  chipFilter("#verfilters", verTypes, state.hiddenVers,
+    (x) => `${/humana/i.test(x.id) ? "👤" : "⚙︎"} ${esc(x.id)} <span class="n">${x.n}</span>`);
+
+  function renderRoadmap() {
+    const shown = features.filter((f) => !state.hiddenCats.has(f.category) && !state.hiddenScopes.has(f.scope) && !state.hiddenVers.has(f.verification));
+    const prog = progressOf(shown);
+    const legend = `<div class="rm-legend">${STATUSES.map(([k, label]) => {
+      const n = prog.counted.filter((f) => statusOf(f) === k).length;
+      return `<span><i style="background:${STATUS_COLOR[k]}"></i>${n} ${label}</span>`;
+    }).join("")}${prog.later ? `<span>· ${prog.later} a posponer fuera del progreso</span>` : ""}</div>`;
+    const bar = (fs) => {
+      const { counted, later } = progressOf(fs);
+      const tip = STATUSES.map(([k, label]) => `${counted.filter((f) => statusOf(f) === k).length} ${label}`).join(" · ")
+        + (later ? ` · ${later} a posponer (no cuentan)` : "");
+      const segs = STATUSES.map(([k]) => {
+        const n = counted.filter((f) => statusOf(f) === k).length;
+        return n ? `<span style="width:${(100 * n) / counted.length}%;background:${STATUS_COLOR[k]}"></span>` : "";
+      }).join("");
+      return `<div class="bar" role="img" aria-label="Estado: ${tip}" title="${tip}">${segs}</div>`;
+    };
+    roadmapEl.innerHTML = `${legend}<div class="rm-cols">${STAGES.map((st) => {
+      const fs = shown.filter((f) => f.stage === st);
+      const stars = fs.filter((f) => f.unique).length;
+      const { counted, done } = progressOf(fs);
+      return `<section class="rm-col" aria-label="Etapa ${esc(st)}">
+        <h3><span>${st === "Continua" ? "Continua" : "Etapa " + esc(st)}</span><span class="n" title="Hechas o verificadas, sin contar las de posponer">${done}/${counted.length}${stars ? ` · ${stars}★` : ""}</span></h3>
+        ${counted.length ? bar(fs) : ""}
+        ${fs.map((f) => {
+          const c = byId.get(f.concept);
+          return `<button type="button" class="card" data-concept="${esc(f.concept)}" data-num="${esc(f.number)}"
+              style="border-left-color:${color(c.type)}" title="${esc(f.description)}&#10;Concepto: ${esc(c.name)}">
+            <div class="top"><span>${esc(f.number)} · ${esc(f.category)} · ${esc(f.category_name)}</span>${f.unique ? '<span class="star" aria-label="Diferenciador único">★</span>' : ""}</div>
+            <div class="title">${esc(f.name)}</div>
+            <div class="meta">${statusDot(f)}${verIcon(f)}<span>${esc(c.name)}</span>${f.scope_note ? `<span class="tag-posponer">${esc(f.scope_note)}</span>` : ""}</div>
+          </button>`;
+        }).join("")}
+      </section>`;
+    }).join("")}</div>`;
+    refreshCards();
+  }
+
+  function refreshCards() {
+    if (state.view !== "roadmap") return;
+    const q = state.query ? norm(state.query) : "";
+    roadmapEl.querySelectorAll(".card").forEach((el) => {
+      const f = features.find((x) => x.number === el.dataset.num);
+      el.classList.toggle("selected", f.concept === state.selected);
+      el.classList.toggle("current", f.number === state.feature);
+      el.classList.toggle("dim", !!q && !norm(`${f.number} ${f.name} ${f.description}`).includes(q));
+    });
+  }
+
+  roadmapEl.addEventListener("click", (e) => {
+    const card = e.target.closest(".card");
+    if (card) select(card.dataset.concept, card.dataset.num);
+  });
+
+  // ---------- Panel de filtros desplegable ----------
+  // Cerrado por defecto; el botón muestra cuántos filtros están activos en la vista actual
+  const fToggle = document.getElementById("ftoggle");
+  const fPanel = document.getElementById("filterpanel");
+  const fReset = document.getElementById("freset");
+  const FILTERS_KEY = "mapa-appartamentos.filtros-abiertos";
+  function activeFilters() {
+    return state.view === "roadmap"
+      ? [state.hiddenCats, state.hiddenScopes, state.hiddenVers]
+      : [state.hidden];
+  }
+  function updateFilterToggle() {
+    const n = activeFilters().reduce((a, set) => a + set.size, 0);
+    document.getElementById("fcount").textContent = n ? ` · ${n} oculto${n === 1 ? "" : "s"}` : "";
+    fToggle.setAttribute("aria-label", n ? `Filtros, ${n} oculto${n === 1 ? "" : "s"}` : "Filtros");
+    fReset.hidden = n === 0;
+  }
+  function setFiltersOpen(open) {
+    fPanel.hidden = !open;
+    fToggle.setAttribute("aria-expanded", String(open));
+    try { localStorage.setItem(FILTERS_KEY, open ? "1" : "0"); } catch (e) { /* sin almacenamiento: solo no se recuerda */ }
+  }
+  fToggle.addEventListener("click", () => setFiltersOpen(fPanel.hidden));
+  fReset.addEventListener("click", () => {
+    activeFilters().forEach((set) => set.clear());
+    d3.selectAll(state.view === "roadmap" ? "#rmfilters .chip" : "#filters .chip").attr("aria-pressed", "true");
+    updateFilterToggle();
+    if (state.view === "roadmap") renderRoadmap(); else applyLayout();
+  });
+  let startOpen = false;
+  try { startOpen = localStorage.getItem(FILTERS_KEY) === "1"; } catch (e) { /* sin almacenamiento */ }
+  setFiltersOpen(startOpen);
+
+  function setView(view) {
+    state.view = view;
+    document.querySelectorAll("[data-view]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.view === view)));
+    const isRoadmap = view === "roadmap";
+    svg.style("display", isRoadmap ? "none" : null);
+    roadmapEl.style.display = isRoadmap ? "block" : "none";
+    document.getElementById("filters").hidden = isRoadmap;
+    document.getElementById("rmfilters").hidden = !isRoadmap;
+    updateFilterToggle();
+    // Cortar una animación de zoom en curso: sobre el grafo oculto (tamaño 0) D3 calcularía transformaciones NaN
+    if (isRoadmap) { svg.interrupt(); sim.stop(); renderRoadmap(); } else applyLayout();
+  }
+
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => setView(b.dataset.view)));
+
+  document.getElementById("search").addEventListener("input", (e) => {
+    state.query = e.target.value.trim();
+    refreshHighlight();
+  });
+
+  window.addEventListener("resize", () => { if (state.view !== "roadmap") fit(state.view === "layers"); });
+
+  renderSummary();
+  applyLayout();
+  console.info(`Mapa cargado: ${nodes.length} nodos, ${links.length} links, ${features.length} funciones`);
+})();
+</script>
+</body>
+</html>

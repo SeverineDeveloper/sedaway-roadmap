@@ -1,0 +1,3520 @@
+{
+ "types": [
+  {
+   "id": "fund",
+   "name": "Fundamentos"
+  },
+  {
+   "id": "func",
+   "name": "Funciones"
+  },
+  {
+   "id": "tech",
+   "name": "Tecnología"
+  },
+  {
+   "id": "etapa",
+   "name": "Etapas del roadmap"
+  },
+  {
+   "id": "doc",
+   "name": "Documentos"
+  },
+  {
+   "id": "emp",
+   "name": "Empresa y legal"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "f1",
+   "type": "fund",
+   "name": "Agente personal por usuario",
+   "description": "Cada persona tiene su propio agente que trabaja para ella, no para la plataforma, y recuerda sus preferencias."
+  },
+  {
+   "id": "f2",
+   "type": "fund",
+   "name": "WhatsApp como interfaz",
+   "description": "No hay app que descargar. El producto vive donde la gente ya conversa, lo que baja la barrera de entrada a casi cero."
+  },
+  {
+   "id": "f3",
+   "type": "fund",
+   "name": "Agentes negocian, humanos deciden",
+   "description": "Protocolo A2A: cada parte fija límites, los agentes negocian dentro de ellos y el acuerdo final siempre lo aprueban las personas. El mínimo del propietario nunca se revela."
+  },
+  {
+   "id": "f4",
+   "type": "fund",
+   "name": "La memoria es el activo",
+   "description": "Cada conversación enriquece lo que el agente sabe del usuario y del mercado. Es el costo de cambio que la competencia no puede copiar."
+  },
+  {
+   "id": "f5",
+   "type": "fund",
+   "name": "La demanda no satisfecha es información",
+   "description": "Lo que los usuarios buscan y no encuentran indica qué falta construir. Es la base de la Pre-venta Inversa."
+  },
+  {
+   "id": "c_cli",
+   "type": "func",
+   "name": "Agente del cliente",
+   "description": "Aprende el perfil del inquilino, busca, alerta, agenda y negocia por él.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_prop",
+   "type": "func",
+   "name": "Asistente del propietario",
+   "description": "Responde 24/7, filtra candidatos según criterios configurados, agenda y reporta.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_onb",
+   "type": "func",
+   "name": "Onboarding por WhatsApp",
+   "description": "El agente pregunta nombre, rol, zona, presupuesto, habitaciones, mascotas, fecha y límite de negociación, y lo guarda en memoria.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_reg",
+   "type": "func",
+   "name": "Registro de propiedades",
+   "description": "Formulario web para que propietarios y agencias aliadas publiquen inventario.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_bus",
+   "type": "func",
+   "name": "Búsqueda de propiedades",
+   "description": "Herramienta search_properties: consulta la base de datos con filtros de zona, precio, habitaciones y amenidades.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_fuera",
+   "type": "func",
+   "name": "Búsqueda fuera del ecosistema",
+   "description": "El agente busca también en fuentes externas autorizadas y alerta sobre propiedades fuera del inventario propio.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_alert",
+   "type": "func",
+   "name": "Alertas proactivas",
+   "description": "Herramienta send_notification: avisa cuando aparece un match nuevo o hay una actualización.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_visit",
+   "type": "func",
+   "name": "Agendamiento de visitas",
+   "description": "Herramienta schedule_visit: agenda y notifica a ambas partes, con recordatorios.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_mem",
+   "type": "func",
+   "name": "Memoria por usuario",
+   "description": "Herramienta update_memory: guarda preferencias y hechos clave. Redis para el contexto activo, PostgreSQL para lo persistente.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_ver",
+   "type": "func",
+   "name": "Verificación de identidad y crédito",
+   "description": "Herramienta screen_candidate con TransUnion CreditVision e IDVision, con consentimiento explícito (Ley 172-13).",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_rep",
+   "type": "func",
+   "name": "Reputación básica",
+   "description": "Sistema de reputación entre las partes para generar confianza.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_cfg",
+   "type": "func",
+   "name": "Configuración del asistente",
+   "description": "El propietario fija una vez su precio mínimo, contrato mínimo, criterios, horario, tono y autonomía de negociación.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_a2a",
+   "type": "func",
+   "name": "Motor de negociación A2A",
+   "description": "Herramienta initiate_negotiation y tablas negotiations y negotiation_log. Se activa cuando el precio difiere menos del 20% del presupuesto.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_aprob",
+   "type": "func",
+   "name": "Aprobación humana del preacuerdo",
+   "description": "El preacuerdo queda pendiente hasta que inquilino y propietario lo aprueban.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_band",
+   "type": "func",
+   "name": "Bandeja de chats",
+   "description": "Panel propio con todos los chats por número, para seguir conversaciones y tomar el control pausando al agente. Respeta la ventana de 24 h de WhatsApp.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_dash",
+   "type": "func",
+   "name": "Dashboard para propietarios",
+   "description": "Panel web con métricas, candidatos y propiedades, sobre una API REST.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_reportes",
+   "type": "func",
+   "name": "Reportes mensuales",
+   "description": "Herramienta generate_report: ocupación, ingresos, gastos y averías del portafolio.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_pro",
+   "type": "func",
+   "name": "Consola Pro para agencias",
+   "description": "El mismo panel con varios usuarios por agencia, su inventario y sus chats. Su modelo de cobro está por decidir.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_conc",
+   "type": "func",
+   "name": "Concierge post-alquiler",
+   "description": "Herramienta coordinate_vendor: coordina mudanza, técnicos e internet; cobra comisión a proveedores verificados.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_corr",
+   "type": "func",
+   "name": "Corretaje automatizado",
+   "description": "Comisión por cada alquiler o venta cerrado con ayuda de la IA.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_pre",
+   "type": "func",
+   "name": "Pre-venta Inversa",
+   "description": "Agrupa búsquedas insatisfechas para que constructoras desarrollen proyectos con demanda comprobada, con Piantini Ramos Services como intermediario o socio.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_cumpl",
+   "type": "func",
+   "name": "Cumplimiento regulatorio",
+   "description": "Ley 172-13 en RD y Fair Housing, FCRA, CCPA y TCPA para EE. UU.: consentimiento explícito, audit trail y aprobación humana para cualquier rechazo.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_contr",
+   "type": "func",
+   "name": "Contratos digitales y firma electrónica",
+   "description": "Al aprobarse el preacuerdo se genera el contrato con los términos ya negociados, con firma electrónica válida en RD y EE. UU.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_api",
+   "type": "func",
+   "name": "API white-label para administradoras",
+   "description": "Licencia del agente IA bajo la marca de administradoras con 10+ unidades: API, SDK, panel multi-unidad e integración MLS.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "c_ali",
+   "type": "func",
+   "name": "Alianzas con constructoras y bancos",
+   "description": "Publicidad de proyectos segmentada por perfil para constructoras, y oferta en el chat de hipotecas, seguros y otros productos bancarios.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_tw",
+   "type": "tech",
+   "name": "Twilio WhatsApp API",
+   "description": "Canal de mensajería. El número [número oculto] está en la API, por eso no puede usarse en la app de WhatsApp Business.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_hook",
+   "type": "tech",
+   "name": "Webhook y router de agentes",
+   "description": "Node.js + Express. Recibe el mensaje, identifica al usuario y su rol, y arma el contexto.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_cl",
+   "type": "tech",
+   "name": "Claude API",
+   "description": "Motor de razonamiento de los agentes, con tool use.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_pg",
+   "type": "tech",
+   "name": "PostgreSQL (Neon)",
+   "description": "Usuarios, propiedades, conversaciones, negociaciones y memoria persistente.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_rd",
+   "type": "tech",
+   "name": "Redis (Upstash)",
+   "description": "Contexto activo de conversaciones y sesiones de negociación.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_rw",
+   "type": "tech",
+   "name": "Railway",
+   "description": "Hosting del backend con despliegue desde GitHub.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_tu",
+   "type": "tech",
+   "name": "TransUnion",
+   "description": "Identidad y score crediticio para el screening de candidatos.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "t_st",
+   "type": "tech",
+   "name": "Stripe",
+   "description": "Cobros de comisiones, penalizaciones y tarifas de éxito.",
+   "status": "sin analizar"
+  },
+  {
+   "id": "e11",
+   "type": "etapa",
+   "name": "Etapa 1.1 · Setup y agente básico",
+   "description": "Semanas 1–4. Entregable: un usuario escribe por WhatsApp y el agente le busca propiedades recordando sus preferencias.",
+   "order": 1
+  },
+  {
+   "id": "e12",
+   "type": "etapa",
+   "name": "Etapa 1.2 · Agente completo y seguridad",
+   "description": "Semanas 5–8. Entregable: el propietario configura su asistente una vez; este responde 24/7 y filtra candidatos.",
+   "order": 2
+  },
+  {
+   "id": "e20",
+   "type": "etapa",
+   "name": "Etapa 2.0 · Negociación A2A y dashboard",
+   "description": "Semanas 9–14. Entregable: cliente y propietario cierran una prenegociación sin hablar directamente.",
+   "order": 3
+  },
+  {
+   "id": "eF",
+   "type": "etapa",
+   "name": "Capa futura · Escala y negocio",
+   "description": "Después de la 2.0, según evidencia de uso: Consola Pro, concierge completo, Pre-venta Inversa, expansión.",
+   "order": 4
+  },
+  {
+   "id": "d_idx",
+   "type": "doc",
+   "name": "00 · LÉEME: Índice del proyecto",
+   "description": "Punto de entrada: fundamentos, orden de lectura y puntos abiertos."
+  },
+  {
+   "id": "d_con",
+   "type": "doc",
+   "name": "Conceptualización y MVP",
+   "description": "Sept. 2025. La idea original como marketplace con chatbot. Antecedente histórico."
+  },
+  {
+   "id": "d_sed",
+   "type": "doc",
+   "name": "Appartamentos Sedaway",
+   "description": "Sept. 2026. La visión ampliada: agentes, A2A, concierge y Pre-venta Inversa."
+  },
+  {
+   "id": "d_pre",
+   "type": "doc",
+   "name": "Pre-venta Inversa",
+   "description": "Modelo de desarrollo inmobiliario guiado por la demanda."
+  },
+  {
+   "id": "d_mvp",
+   "type": "doc",
+   "name": "MVP 2.0",
+   "description": "Marzo 2026. Producto, herramientas del agente, roadmap por etapas, modelo de negocio y riesgos."
+  },
+  {
+   "id": "d_tec",
+   "type": "doc",
+   "name": "Documentación Técnica v1.0",
+   "description": "Marzo 2026. Arquitectura, esquema de base de datos, prompts y roadmap de 12 semanas."
+  },
+  {
+   "id": "d_band",
+   "type": "doc",
+   "name": "Bandeja de chats",
+   "description": "Oct. 2026. El problema de WhatsApp Business y la solución con bandeja propia."
+  },
+  {
+   "id": "d_eje",
+   "type": "doc",
+   "name": "Documento Ejecutivo",
+   "description": "Oct. 2026. Estado legal, tecnológico y financiero, y modelo de ingresos depurado."
+  },
+  {
+   "id": "d_leg",
+   "type": "doc",
+   "name": "Registros legales",
+   "description": "Registros mercantiles, certificados de ONAPI y estatutos."
+  },
+  {
+   "id": "d_cat",
+   "type": "doc",
+   "name": "Catálogo de Servicios",
+   "description": "Marzo 2026. Las 63 funciones de la plataforma en 12 categorías (A–L), 23 marcadas como diferenciadores únicos, cada una con su etapa."
+  },
+  {
+   "id": "l_prs",
+   "type": "emp",
+   "name": "Piantini Ramos Services, S.R.L.",
+   "description": "Entidad del grupo. Los datos societarios no se publican."
+  },
+  {
+   "id": "l_sed",
+   "type": "emp",
+   "name": "Appartamentos Sedaway, S.R.L.",
+   "description": "Entidad del grupo. Los datos societarios no se publican."
+  },
+  {
+   "id": "l_cto",
+   "type": "emp",
+   "name": "Socio tecnológico (CTO)",
+   "description": "Entidad del grupo. Los datos societarios no se publican."
+  },
+  {
+   "id": "l_onapi",
+   "type": "emp",
+   "name": "Nombres comerciales ONAPI",
+   "description": "Entidad del grupo. Los datos societarios no se publican."
+  }
+ ],
+ "links": [
+  {
+   "source": "f1",
+   "target": "c_cli",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f1",
+   "target": "c_prop",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f1",
+   "target": "c_cfg",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f2",
+   "target": "c_onb",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f2",
+   "target": "c_alert",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f2",
+   "target": "c_band",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f2",
+   "target": "t_tw",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f3",
+   "target": "c_a2a",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f3",
+   "target": "c_aprob",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f3",
+   "target": "c_cfg",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f3",
+   "target": "c_ver",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f4",
+   "target": "c_mem",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f4",
+   "target": "c_onb",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f4",
+   "target": "c_cli",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f5",
+   "target": "c_pre",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "f5",
+   "target": "c_fuera",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "c_onb",
+   "target": "t_hook",
+   "relation": "usa"
+  },
+  {
+   "source": "c_bus",
+   "target": "t_pg",
+   "relation": "usa"
+  },
+  {
+   "source": "c_mem",
+   "target": "t_rd",
+   "relation": "usa"
+  },
+  {
+   "source": "c_mem",
+   "target": "t_pg",
+   "relation": "usa"
+  },
+  {
+   "source": "c_ver",
+   "target": "t_tu",
+   "relation": "usa"
+  },
+  {
+   "source": "c_a2a",
+   "target": "t_pg",
+   "relation": "usa"
+  },
+  {
+   "source": "c_a2a",
+   "target": "t_rd",
+   "relation": "usa"
+  },
+  {
+   "source": "c_band",
+   "target": "t_tw",
+   "relation": "usa"
+  },
+  {
+   "source": "c_band",
+   "target": "t_pg",
+   "relation": "usa"
+  },
+  {
+   "source": "c_corr",
+   "target": "t_st",
+   "relation": "usa"
+  },
+  {
+   "source": "c_cli",
+   "target": "t_cl",
+   "relation": "usa"
+  },
+  {
+   "source": "c_prop",
+   "target": "t_cl",
+   "relation": "usa"
+  },
+  {
+   "source": "t_tw",
+   "target": "t_hook",
+   "relation": "usa"
+  },
+  {
+   "source": "t_hook",
+   "target": "t_cl",
+   "relation": "usa"
+  },
+  {
+   "source": "t_hook",
+   "target": "t_rw",
+   "relation": "usa"
+  },
+  {
+   "source": "c_dash",
+   "target": "t_pg",
+   "relation": "usa"
+  },
+  {
+   "source": "c_onb",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_reg",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_bus",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_mem",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_alert",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_tw",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_hook",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_cl",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_pg",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_rd",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_rw",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_prop",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_ver",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_rep",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_cfg",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_fuera",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_tu",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_a2a",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_aprob",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_dash",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_reportes",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_corr",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "t_st",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_pro",
+   "target": "eF",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_conc",
+   "target": "eF",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_pre",
+   "target": "eF",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_band",
+   "target": "e11",
+   "relation": "propuesto para"
+  },
+  {
+   "source": "c_cli",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "e11",
+   "target": "e12",
+   "relation": "precede a"
+  },
+  {
+   "source": "e12",
+   "target": "e20",
+   "relation": "precede a"
+  },
+  {
+   "source": "e20",
+   "target": "eF",
+   "relation": "precede a"
+  },
+  {
+   "source": "c_a2a",
+   "target": "c_ver",
+   "relation": "depende de"
+  },
+  {
+   "source": "c_a2a",
+   "target": "c_cfg",
+   "relation": "depende de"
+  },
+  {
+   "source": "c_a2a",
+   "target": "c_aprob",
+   "relation": "termina en"
+  },
+  {
+   "source": "c_band",
+   "target": "c_dash",
+   "relation": "evoluciona a"
+  },
+  {
+   "source": "c_dash",
+   "target": "c_pro",
+   "relation": "evoluciona a"
+  },
+  {
+   "source": "c_cli",
+   "target": "c_bus",
+   "relation": "usa"
+  },
+  {
+   "source": "c_cli",
+   "target": "c_visit",
+   "relation": "usa"
+  },
+  {
+   "source": "c_cli",
+   "target": "c_a2a",
+   "relation": "inicia"
+  },
+  {
+   "source": "c_prop",
+   "target": "c_reportes",
+   "relation": "usa"
+  },
+  {
+   "source": "c_prop",
+   "target": "c_visit",
+   "relation": "usa"
+  },
+  {
+   "source": "c_visit",
+   "target": "e11",
+   "relation": "planificado en"
+  },
+  {
+   "source": "c_aprob",
+   "target": "c_corr",
+   "relation": "habilita"
+  },
+  {
+   "source": "c_fuera",
+   "target": "c_pre",
+   "relation": "alimenta"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_cli",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_prop",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_a2a",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "e11",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "e12",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "e20",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_ver",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_onb",
+   "relation": "describe"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_cfg",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "t_hook",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "t_pg",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "t_rd",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "t_cl",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "c_mem",
+   "relation": "describe"
+  },
+  {
+   "source": "d_tec",
+   "target": "c_a2a",
+   "relation": "describe"
+  },
+  {
+   "source": "d_band",
+   "target": "c_band",
+   "relation": "describe"
+  },
+  {
+   "source": "d_band",
+   "target": "t_tw",
+   "relation": "describe"
+  },
+  {
+   "source": "d_pre",
+   "target": "c_pre",
+   "relation": "describe"
+  },
+  {
+   "source": "d_pre",
+   "target": "f5",
+   "relation": "describe"
+  },
+  {
+   "source": "d_sed",
+   "target": "c_conc",
+   "relation": "describe"
+  },
+  {
+   "source": "d_sed",
+   "target": "c_pre",
+   "relation": "describe"
+  },
+  {
+   "source": "d_sed",
+   "target": "c_a2a",
+   "relation": "describe"
+  },
+  {
+   "source": "d_sed",
+   "target": "f1",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "l_prs",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "l_sed",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "l_cto",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "l_onapi",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "c_corr",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "c_conc",
+   "relation": "describe"
+  },
+  {
+   "source": "d_eje",
+   "target": "c_a2a",
+   "relation": "describe"
+  },
+  {
+   "source": "d_leg",
+   "target": "l_prs",
+   "relation": "describe"
+  },
+  {
+   "source": "d_leg",
+   "target": "l_sed",
+   "relation": "describe"
+  },
+  {
+   "source": "d_leg",
+   "target": "l_onapi",
+   "relation": "describe"
+  },
+  {
+   "source": "d_con",
+   "target": "c_reg",
+   "relation": "describe"
+  },
+  {
+   "source": "d_con",
+   "target": "c_bus",
+   "relation": "describe"
+  },
+  {
+   "source": "d_idx",
+   "target": "f1",
+   "relation": "describe"
+  },
+  {
+   "source": "d_idx",
+   "target": "f2",
+   "relation": "describe"
+  },
+  {
+   "source": "d_idx",
+   "target": "f3",
+   "relation": "describe"
+  },
+  {
+   "source": "d_idx",
+   "target": "f4",
+   "relation": "describe"
+  },
+  {
+   "source": "d_idx",
+   "target": "f5",
+   "relation": "describe"
+  },
+  {
+   "source": "l_prs",
+   "target": "l_sed",
+   "relation": "socia de"
+  },
+  {
+   "source": "l_cto",
+   "target": "l_sed",
+   "relation": "socio de"
+  },
+  {
+   "source": "l_prs",
+   "target": "l_onapi",
+   "relation": "titular de"
+  },
+  {
+   "source": "l_sed",
+   "target": "t_tw",
+   "relation": "opera"
+  },
+  {
+   "source": "l_prs",
+   "target": "c_pre",
+   "relation": "participa en"
+  },
+  {
+   "source": "d_eje",
+   "target": "c_pro",
+   "relation": "contradice",
+   "conflict": true,
+   "why": "El Documento Ejecutivo dice que se eliminó el modelo SaaS tradicional; el MVP 2.0 y Appartamentos Sedaway lo incluyen como pilar."
+  },
+  {
+   "source": "d_eje",
+   "target": "e20",
+   "relation": "adelanta",
+   "conflict": true,
+   "why": "El Documento Ejecutivo dice que se está probando el A2A, que en el roadmap va en la Etapa 2.0, después de la seguridad de la 1.2."
+  },
+  {
+   "source": "d_tec",
+   "target": "d_mvp",
+   "relation": "difiere de",
+   "conflict": true,
+   "why": "La Documentación Técnica usa claude-opus-4-6 y el MVP 2.0 usa claude-sonnet-4-6."
+  },
+  {
+   "source": "l_onapi",
+   "target": "l_prs",
+   "relation": "titularidad dudosa",
+   "conflict": true,
+   "why": "El nombre comercial Piantini Ramos Services está registrado a nombre de Hansen Piantini Ramos como persona, no de la sociedad."
+  },
+  {
+   "source": "f3",
+   "target": "c_cumpl",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "c_cumpl",
+   "target": "e12",
+   "relation": "planificado en"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_cumpl",
+   "relation": "describe"
+  },
+  {
+   "source": "f3",
+   "target": "c_contr",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "c_contr",
+   "target": "e20",
+   "relation": "planificado en"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_contr",
+   "relation": "describe"
+  },
+  {
+   "source": "d_con",
+   "target": "c_contr",
+   "relation": "describe"
+  },
+  {
+   "source": "f1",
+   "target": "c_api",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "c_api",
+   "target": "eF",
+   "relation": "planificado en"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_api",
+   "relation": "describe"
+  },
+  {
+   "source": "f4",
+   "target": "c_ali",
+   "relation": "se concreta en"
+  },
+  {
+   "source": "c_ali",
+   "target": "eF",
+   "relation": "planificado en"
+  },
+  {
+   "source": "d_mvp",
+   "target": "c_ali",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_onb",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_mem",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_bus",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_fuera",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_alert",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_visit",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_a2a",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_cli",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_cfg",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_prop",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_reportes",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_conc",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_aprob",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_ver",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_rep",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "t_tw",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_cumpl",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_pro",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_api",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_contr",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "t_st",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_corr",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_ali",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_dash",
+   "relation": "describe"
+  },
+  {
+   "source": "d_cat",
+   "target": "c_contr",
+   "relation": "adelanta",
+   "conflict": true,
+   "why": "El Catálogo pone la generación de contratos digitales (función 47) en la Etapa 2.0; el MVP 2.0 pone «Contratos digitales con validez legal y firma electrónica» en la Etapa 3.0."
+  },
+  {
+   "source": "d_cat",
+   "target": "e20",
+   "relation": "agrega la etapa 2.1",
+   "conflict": true,
+   "why": "El Catálogo asigna el marketplace de proveedores (funciones 44–46) a una Etapa 2.1 que el roadmap del MVP 2.0 no tiene: este pasa de la 2.0 a la 3.0 y solo nombra una «Fase 2.1» en la tabla de ingresos."
+  },
+  {
+   "source": "d_cat",
+   "target": "c_pro",
+   "relation": "precio sin definir",
+   "conflict": true,
+   "why": "El Catálogo deja en blanco el precio del plan para agentes inmobiliarios («$$-$$ USD/mes», función 39); el MVP 2.0 lo fija en $49–99 al mes."
+  },
+  {
+   "source": "d_cat",
+   "target": "c_cumpl",
+   "relation": "da por implementado",
+   "conflict": true,
+   "why": "El Catálogo marca el cumplimiento de la Ley 172-13 (función 59) como «Implementado», pero el MVP 2.0 está en fase de «Conceptualización y Diseño» y todavía no hay código analizado que lo respalde."
+  }
+ ],
+ "features": [
+  {
+   "number": "01",
+   "name": "Onboarding conversacional por WhatsApp",
+   "description": "El agente entrevista al usuario en lenguaje natural y arma su perfil sin formularios.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": true,
+   "tool": null,
+   "concept": "c_onb",
+   "status": "hecho",
+   "acceptance": "Un número nuevo recibe la bienvenida y el agente pregunta nombre, rol, zona, presupuesto, habitaciones, mascotas, fecha de entrada y límite de negociación. Al terminar, users y la memoria contienen los 8 datos.",
+   "verification": "Automática",
+   "suggested_test": "Simular una conversación completa contra el webhook y comprobar las filas guardadas.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Prueba: «el registro completo por WhatsApp deja el perfil en la memoria» (webhook firmado, filas en users y agent_memory)"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/onboarding.js",
+     "note": "Paso de fecha de entrada"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/moveInDate.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/audit/A6-onboarding.test.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "02",
+   "name": "Aprendizaje automático de preferencias",
+   "description": "Detecta y guarda zona, presupuesto, habitaciones, mascotas y estilo de vida en cada interacción.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": true,
+   "tool": null,
+   "concept": "c_mem",
+   "status": "hecho",
+   "acceptance": "Si el usuario menciona una preferencia nueva en cualquier momento («ahora tengo un gato»), update_memory la guarda y la siguiente búsqueda la aplica sin volver a preguntar.",
+   "verification": "Automática",
+   "suggested_test": "Conversación simulada con un cambio de preferencia y verificación de la búsqueda siguiente.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Prueba: «\"ahora tengo un gato\": se guarda y la búsqueda siguiente lo aplica»"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/profileRanking.js",
+     "note": "La memoria se convierte en filtros por defecto"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/profileRanking.test.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "03",
+   "name": "Memoria persistente del historial",
+   "description": "Recuerda cada conversación y propiedad vista, y por qué el usuario la prefirió o descartó.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": true,
+   "tool": null,
+   "concept": "c_mem",
+   "status": "hecho",
+   "acceptance": "Tras reiniciar el servidor y vaciar Redis, el agente sigue recordando las preferencias y las propiedades vistas y descartadas, leyéndolas de PostgreSQL.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de integración: guardar, reiniciar, vaciar caché y consultar.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Pruebas: descartes con motivo que no se vuelven a ofrecer y «tras un reinicio y sin Redis, la memoria sale entera de PostgreSQL»"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/memory.js",
+     "note": "recordPropertyFeedback"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/043_agent_memory_feedback.sql"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "04",
+   "name": "Búsqueda proactiva dentro del ecosistema",
+   "description": "Consulta el inventario propio con filtros y ordena por encaje con el perfil.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": false,
+   "tool": "search_properties",
+   "concept": "c_bus",
+   "status": "hecho",
+   "acceptance": "search_properties filtra por zona, precio máximo, habitaciones y amenidades, devuelve solo propiedades disponibles y las ordena por encaje con el perfil.",
+   "verification": "Automática",
+   "suggested_test": "Datos de prueba con resultados esperados conocidos.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Pruebas: búsqueda con memoria, amenidades filtradas en la base, solo disponibles y orden por encaje"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/properties.js",
+     "note": "Filtros de amenidades y fecha de entrada"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/profileRanking.js",
+     "note": "Orden por encaje (fit_score)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "05",
+   "name": "Búsqueda fuera del ecosistema",
+   "description": "Si no hay match interno, busca en Corotos, Zillow y grupos de WhatsApp de agentes.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.2",
+   "unique": true,
+   "tool": null,
+   "concept": "c_fuera",
+   "status": "pendiente",
+   "acceptance": "Sin match interno, el agente consulta fuentes externas autorizadas y muestra resultados marcados como externos, con enlace de origen. Solo se usan fuentes con permiso documentado.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba con fuentes simuladas y revisión de permisos de cada fuente.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:185"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/clientPrompt.js:61"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay código de búsqueda externa: sin resultados internos, la tool devuelve 'No se encontraron propiedades' y el prompt solo sugiere ajustar sector o precio. Falta todo: conectores por fuente, registro de permisos por fuente, resultados marcados como externos con enlace de origen y pruebas con fuentes simuladas."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Permiso documentado o acuerdo con Corotos, con Zillow (API restringida; sus términos prohíben el scraping) y con los administradores de los grupos de WhatsApp de agentes (no hay API oficial para leer grupos), más revisión legal de cada fuente."
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "06",
+   "name": "Alertas proactivas de match",
+   "description": "Avisa por WhatsApp cuando aparece una propiedad que coincide con el perfil.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": true,
+   "tool": "send_notification",
+   "concept": "c_alert",
+   "status": "hecho",
+   "acceptance": "Al publicarse una propiedad que coincide con un perfil activo, el usuario recibe un WhatsApp en menos de 60 segundos. Los perfiles que no coinciden no reciben nada.",
+   "verification": "Automática",
+   "suggested_test": "Insertar una propiedad de prueba y medir el envío y su tiempo.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Prueba #06: avisa en menos de 60 s solo a perfiles activos que encajan; nada a los demás"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/propertyNotifier.test.js",
+     "note": "El re-matching diario respeta baja, límite y ventana"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/propertyNotifier.js",
+     "note": "Fuera de la ventana de 24 h necesita una plantilla aprobada por Meta en WHATSAPP_PROACTIVE_TEMPLATES (property_alert)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "07",
+   "name": "Agendamiento automático de visitas",
+   "description": "Coordina la visita con el asistente del propietario y bloquea el horario.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": false,
+   "tool": "schedule_visit",
+   "concept": "c_visit",
+   "status": "hecho",
+   "acceptance": "schedule_visit solo agenda en horarios disponibles, notifica a ambas partes y no permite dos visitas en el mismo horario de la misma propiedad.",
+   "verification": "Automática",
+   "suggested_test": "Casos de prueba con choque de horarios.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Pruebas #07: horario del propietario, choques de horario y una visita viva por candidato (índices únicos, también con solicitudes simultáneas), aviso al propietario y al candidato"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/Visit.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/visitRules.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/042_visits_proactive_optout.sql"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/047_review_fixes.sql",
+     "note": "Índice uq_visits_active_per_tenant"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx",
+     "note": "Horario de visitas configurable en el panel y por WhatsApp"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "08",
+   "name": "Confirmación y recordatorios",
+   "description": "Recordatorios 24 h y 2 h antes de la visita, con opción de reagendar.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_visit",
+   "status": "hecho",
+   "acceptance": "Se envían recordatorios 24 h y 2 h antes de la visita con dirección y contacto, y reagendar desde el mensaje funciona.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con reloj simulado.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Pruebas #08 con reloj simulado: 24 h y 2 h antes, una sola vez, con dirección y contacto; reagendar desde el chat"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Prueba: REAGENDAR desde WhatsApp"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/visitNotifications.js",
+     "note": "Fuera de la ventana de 24 h necesita una plantilla aprobada por Meta en WHATSAPP_PROACTIVE_TEMPLATES (visit_reminder)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "09",
+   "name": "Negociación autónoma con el propietario",
+   "description": "Negocia precio y condiciones dentro de los límites hasta un preacuerdo para aprobación humana.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "Con límites en ambos lados, una negociación de prueba termina en preacuerdo dentro de los rangos o sin acuerdo. Nunca se exceden los límites.",
+   "verification": "Automática",
+   "suggested_test": "Batería de negociaciones simuladas con límites que se cruzan y que no.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Batería #09: 10 negociaciones con límites que se cruzan y que no; negocian solas, nunca se pasan y, agotado el límite autorizado, le preguntan al cliente en vez de cerrar sin él"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js",
+     "note": "El agente del cliente responde solo hasta su límite autorizado"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "10",
+   "name": "Gestión del proceso de solicitud",
+   "description": "Recolecta documentos, referencias y autorizaciones para la verificación crediticia, dentro de WhatsApp.",
+   "category": "A",
+   "category_name": "Agente IA para Clientes",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cli",
+   "status": "pendiente",
+   "acceptance": "El agente pide por WhatsApp los documentos que exige el propietario, comprueba tipo y legibilidad básica, y marca la solicitud completa solo cuando están todos.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con documentos completos e incompletos.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:201"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:428"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/webhooks/whatsapp.js:88"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/clientPrompt.js:24"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No existe proceso de solicitud: no hay tablas ni lógica para los documentos que exige cada propietario, ni recepción y guardado de archivos (el adjunto entrante no se descarga ni se guarda), ni validación de tipo o legibilidad, ni estado 'solicitud completa'. Lo único relacionado es el consentimiento por WhatsApp para la verificación crediticia (VERIFICAR / NO VERIFICAR). Las referencias no se recogen: la columna users.references existe, pero nada la escribe."
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "11",
+   "name": "Configuración única y operación autónoma",
+   "description": "El propietario fija precios, criterios y reglas una vez; el asistente opera 24/7.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "1.2",
+   "unique": true,
+   "tool": null,
+   "concept": "c_cfg",
+   "status": "parcial",
+   "acceptance": "El propietario configura precio mínimo, contrato mínimo, criterios, horario, tono y autonomía en una sola conversación; se guarda en agent_config y se aplica después.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de guardado y aplicación, más configuración con un propietario real.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/onboarding.js:178"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:127"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:117"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1633"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/onboarding.js:252"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: horario de visitas (panel y WhatsApp), reporte mensual y aviso de renovación configurables. Falta configurar criterios de candidatos y autonomía en una sola conversación."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): El onboarding del propietario solo pide precio mínimo, meses mínimos de contrato y tono (onboarding.js:170-238). Faltan criterios de candidatos, horario de visitas y nivel de autonomía; la autonomía solo existe como slider del dashboard (PUT /users/agent-config) y ningún código la lee. De agent_config solo se aplica el tono, en el prompt del asistente del propietario. El motor A2A no usa min_price ni min_contract_months (toma properties.price_min/min_contract_months o 0,9×lista) y no se copian a las propiedades. El onboarding termina pidiendo registrar la propiedad por WhatsApp, pero OWNER_TOO"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "12",
+   "name": "Respuesta automática a interesados",
+   "description": "Respuesta inmediata a cada consulta, con el tono e información definidos por el propietario.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "1.2",
+   "unique": true,
+   "tool": null,
+   "concept": "c_prop",
+   "status": "parcial",
+   "acceptance": "Cada consulta recibe respuesta en menos de 30 segundos, con el tono configurado y solo con información autorizada. Nunca revela el precio mínimo.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de tiempo de respuesta y búsqueda del precio mínimo en las respuestas.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/clientPrompt.js:123"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:127"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/properties.js:114"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:208"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/claude.js:17"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: el precio mínimo ya no se puede deducir ni aparece en lo que recibe el cliente (#25). Falta medir y garantizar la respuesta en menos de 30 s."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay presupuesto ni medición de la latencia de punta a punta. El tool-loop admite 4 iteraciones con timeout de 45 s y 3 reintentos por llamada, sin un límite de 30 s ni prueba de tiempo; A3.8 solo prueba el 200 del webhook. A los interesados les responde el agente del propio candidato con su propio tono (clientPrompt.js:123); el tono o la personalización del propietario o la inmobiliaria solo llegan al asistente del propietario. La información autorizada se filtra campo a campo (price_min, owner_criteria, agent_rules) y eso está probado. Aun así, el precio mínimo se puede deducir de la contr"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "13",
+   "name": "Filtrado automático de candidatos",
+   "description": "Aplica los criterios preconfigurados y solo escala a los candidatos que pasan el filtro.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_prop",
+   "status": "parcial",
+   "acceptance": "Se aplican los criterios configurados, solo se escalan candidatos que los cumplen y se registra el motivo de cada filtro. Ningún criterio usa atributos protegidos.",
+   "verification": "Automática + humana",
+   "suggested_test": "Casos de prueba por criterio y revisión de los criterios permitidos.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/002_create_properties.sql:29"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:463"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:129"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:291"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:104"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No existe un motor de criterios de candidatos. owner_criteria, declarado 'para filtro automático', solo alimenta condiciones del contrato (depósito, día de pago, etc.). agent_rules es texto libre que solo ve el asistente del propietario, no el motor A2A. El único filtro aplicado es el precio: el piso del propietario y el pre-filtro del 20%. Mascotas, meses mínimos, ingresos, identidad o crédito no se evalúan antes de avisar al propietario de un 'candidato calificado'. El motivo solo queda en negotiation_log cuando se agotan las rondas; el descarte por más del 20% no se registra. No hay lista d"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal de los criterios de selección permitidos (atributos protegidos / no discriminación)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "14",
+   "name": "Agendamiento con confirmación de visitas",
+   "description": "Agenda solo en el horario del propietario, confirma asistencia y envía recordatorios.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "1.2",
+   "unique": false,
+   "tool": "schedule_visit",
+   "concept": "c_visit",
+   "status": "hecho",
+   "acceptance": "Solo se agenda dentro del horario del propietario, se confirma la asistencia, se envían recordatorios 24 h y 2 h antes y se registran las ausencias.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con horarios fuera de rango y reloj simulado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Pruebas: horario fuera de rango, confirmación, recordatorios con reloj simulado y registro de ausencias"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/Visit.js",
+     "note": "recordVisitOutcome (solo después de la hora de la visita)"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Visits.tsx",
+     "note": "Botón «No asistió»"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "15",
+   "name": "Reportes mensuales automáticos",
+   "description": "Resumen mensual de ocupación, ingresos, gastos, averías y proyección, por WhatsApp.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "2.0",
+   "unique": false,
+   "tool": "generate_report",
+   "concept": "c_reportes",
+   "status": "hecho",
+   "acceptance": "El día configurado, el propietario recibe por WhatsApp ocupación, ingresos, gastos y averías, y las cifras coinciden con la base de datos.",
+   "verification": "Automática",
+   "suggested_test": "Generación del reporte con datos conocidos.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/ownerOps.db.test.js",
+     "note": "Prueba #15: el día configurado llega el reporte y las cifras coinciden con la base; no se repite"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/ownerReports.js",
+     "note": "Fuera de la ventana de 24 h necesita una plantilla aprobada por Meta en WHATSAPP_PROACTIVE_TEMPLATES (monthly_report)"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/046_reports_renewals_market.sql"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "16",
+   "name": "Alertas anticipadas de renovación",
+   "description": "Avisa con 30, 60 o 90 días del vencimiento de un contrato y propone renovar o buscar inquilino.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "2.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_prop",
+   "status": "hecho",
+   "acceptance": "Se avisa con la anticipación configurada (30, 60 o 90 días) antes del vencimiento, con las opciones de renovar o buscar inquilino.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con reloj simulado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/ownerOps.db.test.js",
+     "note": "Pruebas #16: anticipación configurable (30/60/90), una sola vez, RENOVAR y BUSCAR INQUILINO"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/renewals.js",
+     "note": "Fuera de la ventana de 24 h necesita una plantilla aprobada por Meta en WHATSAPP_PROACTIVE_TEMPLATES (renewal_notice)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "17",
+   "name": "Coordinación con proveedores ante averías",
+   "description": "Ante una avería contacta al proveedor del marketplace y solo consulta al propietario si hay que decidir.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "2.0",
+   "unique": true,
+   "tool": "coordinate_vendor",
+   "concept": "c_conc",
+   "status": "pendiente",
+   "acceptance": "Un reporte de avería genera el contacto con un proveedor y solo se notifica al propietario si hay una decisión que tomar.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba del flujo. Depende del marketplace de la Etapa 2.1.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:175"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1050"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/providers.js:238"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:875"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No existe la tool coordinate_vendor ni ningún envío automático a proveedores; solo existe la base. Una avería crea una service_request. Si llega por WhatsApp no se notifica a nadie, aunque el mensaje promete que 'un especialista se pondrá en contacto'; si llega por la API REST se notifica siempre al propietario por SSE. Los proveedores solo la ven si consultan su panel, y el propietario asigna a mano. Falta: elegir y contactar al proveedor automáticamente, reglas de cuándo hace falta una decisión del propietario (costo, cotización, urgencia), notificarle solo en ese caso y una prueba del flujo"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Marketplace de proveedores de la Etapa 2.1 con proveedores reales dados de alta (acuerdos comerciales) y plantillas de WhatsApp aprobadas para contactarlos"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "18",
+   "name": "Gestión de portafolios múltiples",
+   "description": "Varias propiedades gestionadas desde una sola conversación de WhatsApp.",
+   "category": "B",
+   "category_name": "Asistente IA para Propietarios",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_prop",
+   "status": "hecho",
+   "acceptance": "Un propietario con varias unidades las gestiona todas desde una conversación, y cada respuesta se refiere a la unidad correcta.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con un propietario de prueba con varias unidades.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Prueba #18: un propietario con varias unidades; cada consulta y acción recae en la unidad correcta"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "19",
+   "name": "Configuración de límites de negociación",
+   "description": "Cada parte define en privado hasta dónde puede llegar su agente.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "parcial",
+   "acceptance": "Cada parte define sus límites en privado, se guardan cifrados y el agente de la otra parte nunca los recibe.",
+   "verification": "Automática",
+   "suggested_test": "Inspección de los datos que recibe cada agente.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/004_create_negotiations.sql:12"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/negotiationVisibility.js:19"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:631"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:761"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:130"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: los límites de cada parte nunca llegan a la otra (#25, #62). Falta guardarlos cifrados."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Cada parte define sus límites por separado: price_min por propiedad, max_negotiate en el onboarding o con update_memory, y los mínimos de la inmobiliaria. Pero se guardan sin cifrar: properties.price_min, negotiations.owner_min/client_max y users.agent_config. El aislamiento se cumple en las tools de ambos agentes y en GET /dashboard/negotiations y GET /negotiations/:id, con pruebas. En cambio, POST /negotiations/:id/approve, /reject y /counter-response devuelven la fila cruda con el límite de la otra parte. Además, el acuerdo se fija en client_max (el propietario conoce el techo del cliente),"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "20",
+   "name": "Detección automática de matches parciales",
+   "description": "Con menos de 20% de diferencia sugiere negociar en lugar de descartar.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": "initiate_negotiation",
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "Con una diferencia menor al 20% se propone negociar en lugar de descartar; con una mayor, no.",
+   "verification": "Automática",
+   "suggested_test": "Casos en el umbral y a ambos lados.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #20: 20 % exacto no negocia, 19,9 % sí"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/partialMatch.js",
+     "note": "Misma regla en initiate_negotiation y en las alertas"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/propertyNotifier.test.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "21",
+   "name": "Intercambio autónomo de condiciones",
+   "description": "Los agentes intercambian ofertas y contraofertas de precio, plazo y términos en tiempo real.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "Cada oferta y contraoferta queda en negotiation_log y la negociación termina en un número máximo de rondas.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de registro y del límite de rondas.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #21: cada oferta y contraoferta en negotiation_log y nunca más de 3 rondas (también las manuales)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "22",
+   "name": "Verificación cruzada de elegibilidad",
+   "description": "Antes del preacuerdo confirma que candidato y propietario cumplen lo exigido y lo prometido.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "pendiente",
+   "acceptance": "No se genera preacuerdo si el candidato no cumple los criterios verificados o si la propiedad no cumple lo prometido.",
+   "verification": "Automática",
+   "suggested_test": "Casos con candidato no elegible. Depende de la verificación de la Etapa 1.2.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:129"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:155"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:353"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:76"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay verificación cruzada antes del preacuerdo. runNegotiationRound pasa a awaiting_approval solo con la condición de precio (client_max ≥ piso) y comprobando que la propiedad no tenga ya otro acuerdo. No consulta la identidad (cedula_verified), ni el resultado o la recomendación del credit check (que solo se lanza cuando el propietario lo pide con screen_candidate), ni los criterios del propietario. Tampoco verifica que la propiedad cumpla lo anunciado (estado, condiciones, amenidades). Sin pruebas."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Verificación de la Etapa 1.2 en producción: buró de crédito real (p. ej. TransUnion) con contrato y credenciales; hoy el proveedor por defecto es mock"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "23",
+   "name": "Pre-acuerdos para aprobación humana",
+   "description": "El agente nunca cierra solo: envía el preacuerdo a ambas personas para su confirmación.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_aprob",
+   "status": "hecho",
+   "acceptance": "Se genera un resumen con todos los términos y la negociación queda en estado awaiting_approval; solo se da por aprobada cuando client_approved y owner_approved son verdaderos.",
+   "verification": "Automática",
+   "suggested_test": "Intento de aprobar con una sola parte (solo client_approved u owner_approved), que debe fallar.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #23: una sola parte no cierra; resumen con todos los términos"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/agreementTerms.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/agreementTerms.test.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "24",
+   "name": "Log auditable de cada negociación",
+   "description": "Cada oferta y decisión queda registrada y visible para ambas partes (7 años).",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "Ambas partes pueden ver el registro completo de su negociación; los registros no se pueden modificar y la política de retención está definida.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de acceso e inmutabilidad, más definición legal de la retención.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Prueba: el log de la negociación solo admite añadir entradas (trigger)"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/negotiationVisibility.test.js",
+     "note": "Cada parte ve el registro completo sin la carta privada de la otra"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/045_audit_trail.sql",
+     "note": "Retención propuesta: 7 años. Falta la definición legal de la política (paso humano para «verificado»)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "25",
+   "name": "Protección de información sensible",
+   "description": "El precio mínimo del propietario nunca se expone; solo se verifica si el acuerdo es viable.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "El precio mínimo del propietario nunca aparece en los mensajes, prompts ni respuestas que recibe el agente del cliente.",
+   "verification": "Automática",
+   "suggested_test": "Búsqueda del valor en todo lo que se envía al agente del cliente.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Barrido #25: el mínimo no aparece en prompts, tools, mensajes ni respuestas al cliente; regresiones de la revisión de seguridad"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js",
+     "note": "computeOwnerCounter: el mínimo no se puede despejar de las contraofertas"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/unit/negotiation.test.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "26",
+   "name": "Propuesta de alternativas si no hay acuerdo",
+   "description": "Si la negociación falla, busca otras propiedades manteniendo el contexto.",
+   "category": "C",
+   "category_name": "Negociación Agente-a-Agente (A2A)",
+   "stage": "2.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_a2a",
+   "status": "hecho",
+   "acceptance": "Si la negociación falla, el agente propone otras propiedades manteniendo el contexto de lo ya discutido.",
+   "verification": "Automática",
+   "suggested_test": "Negociación fallida simulada y revisión de la respuesta.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Prueba: al confirmarse el rechazo, el agente del cliente propone alternativas con el contexto y la propiedad queda descartada"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "27",
+   "name": "Verificación de identidad con cédula/ID",
+   "description": "Confirma la identidad del candidato con TransUnion IDVision.",
+   "category": "D",
+   "category_name": "Verificación e Identidad",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ver",
+   "status": "parcial",
+   "acceptance": "Con consentimiento, la cédula se verifica con TransUnion IDVision y el resultado se guarda. Si el propietario lo exige, sin verificación no se agenda la visita.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba en el entorno de pruebas de TransUnion. Requiere el contrato con TransUnion firmado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:151"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:68"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:280"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:235"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/Visit.js:53"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay integración real verificada con TransUnion IDVision. El proveedor por defecto es 'mock' (identidad = users.cedula_verified o hash del teléfono), y el cliente TransUnion llama a un endpoint supuesto (/id-vision/verify); si falla, devuelve identity_verified=false sin avisar. La cédula nunca se captura: users.cedula no está en USER_ALLOWED_FIELDS (src/models/User.js:129) ni en el onboarding, así que se enviaría id_number=null. La identidad va atada al credit check, no es una verificación independiente, y no actualiza users.cedula_verified. No existe la opción del propietario 'exigir verifi"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Contrato y sandbox de TransUnion IDVision"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "28",
+   "name": "Score crediticio premium",
+   "description": "Score de TransUnion CreditVision como función premium ($12–25).",
+   "category": "D",
+   "category_name": "Verificación e Identidad",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ver",
+   "status": "parcial",
+   "acceptance": "El score se obtiene solo con consentimiento, lo ve únicamente el propietario que lo pidió y el cobro queda registrado.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de permisos de visualización y revisión del flujo de cobro.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:260"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1796"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/025_credit_checks.sql:32"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2341"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:357"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: consentimiento revocable y el informe deja de mostrarse al revocar (#63). Faltan TransUnion y el cobro con Stripe."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Consentimiento y visibilidad existen: GET /credit-checks/:id solo para el solicitante o un admin, y el listado se filtra por requester_id. Faltan cuatro cosas. (1) No hay cobro: cost_usd=20 por defecto, billed nunca se actualiza y no se crea cargo Stripe ni asiento en payments; el revenue de /admin/metrics es un SUM(cost_usd) ficticio. (2) La condición 'premium' es inconsistente: la tool del agente exige plan distinto de basic, pero POST /api/credit-checks está habilitado para basic (migración 039_admin_control_plane.sql:93). (3) Los admins también ven el score. (4) El score real de TransUnion"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Contrato TransUnion CreditVision; cuenta Stripe para el cobro"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "29",
+   "name": "Verificación de empleo y referencias",
+   "description": "Valida empleo activo y contacta referencias sin intervención del propietario.",
+   "category": "D",
+   "category_name": "Verificación e Identidad",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ver",
+   "status": "pendiente",
+   "acceptance": "Se envía la solicitud de verificación, se registran las respuestas y el estado queda visible en un máximo de 48 horas.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba del flujo y confirmación con una referencia real.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:71"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:192"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:71"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:256"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No existe flujo de verificación de empleo ni de referencias. No se envía solicitud a empleador ni a referencias, no hay registro de respuestas, ni plazo de 48 h, ni estado visible. Solo hay un atributo employment_verified sintético en el mock (derivado del hash del teléfono) o leído de un campo supuesto de TransUnion. La tool screen_candidate anuncia 'referencias' sin implementarlas. Sin pruebas."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Opcional: proveedor/convenio de verificación laboral; la prueba sugerida requiere una referencia real"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "30",
+   "name": "Screening con cumplimiento FCRA",
+   "description": "Verificación conforme a FCRA y Ley 172-13, con avisos de acción adversa automáticos.",
+   "category": "D",
+   "category_name": "Verificación e Identidad",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ver",
+   "status": "parcial",
+   "acceptance": "Cada verificación tiene consentimiento, propósito y registro. Si hay un rechazo por crédito, se envía el aviso de acción adversa.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba del registro y del aviso, más revisión legal.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/025_credit_checks.sql:16"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:235"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1865"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:76"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/retention.js:58"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Se registra el consentimiento (consent_given/consent_given_at; consent_ip siempre null por WhatsApp), pero no el texto o versión aceptados. No hay propósito permisible: property_id es opcional y no se valida que el solicitante sea dueño de la propiedad ni que haya una solicitud de alquiler. El audit_log solo se escribe en la ruta REST (no en la tool del agente ni al consentir o rechazar), es editable y se purga a los 365 días. No existe aviso de acción adversa: ni plantilla, ni envío, ni datos del buró ni derecho a disputa cuando la recomendación es DECLINE o hay rechazo. Sin pruebas del regis"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal FCRA/Ley 172-13; datos del buró (TransUnion) para el aviso"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "31",
+   "name": "Sistema de reputación entre partes",
+   "description": "Historial bidireccional basado en cumplimiento, pagos a tiempo y cuidado de la propiedad.",
+   "category": "D",
+   "category_name": "Verificación e Identidad",
+   "stage": "1.2",
+   "unique": true,
+   "tool": null,
+   "concept": "c_rep",
+   "status": "parcial",
+   "acceptance": "Tras una visita o contrato, ambas partes pueden calificarse, y la reputación se calcula solo con eventos verificados en la plataforma.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de cálculo con eventos verificados y no verificados.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:14"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:48"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/reputation.js:101"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/scheduler.js:78"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:444"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Hay cálculo semanal de tenant_scores y landlord_scores a partir de facturas, contratos y servicios, pero no se cumple el criterio. No existe calificación entre las partes tras una visita o contrato; solo se califica a proveedores de servicios. Los scores no se exponen en ninguna ruta ni en la UI (getTenantScore/getLandlordScore no se usan). El cálculo mezcla datos no pertinentes: el maintenance_score del inquilino usa las calificaciones que él dio a proveedores y asume 50 si no hay datos; el tenant_reviews del propietario usa ratings de servicios. No distingue eventos verificados de no verific"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "32",
+   "name": "Operación nativa en WhatsApp",
+   "description": "Sin descargas ni registro tradicional: el usuario habla con su agente en WhatsApp.",
+   "category": "E",
+   "category_name": "Canal y Distribución",
+   "stage": "1.1",
+   "unique": true,
+   "tool": null,
+   "concept": "t_tw",
+   "status": "hecho",
+   "acceptance": "El flujo onboarding → búsqueda → visita se completa sin salir de WhatsApp. El webhook valida la firma de Twilio y rechaza peticiones sin firma válida.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba automática de la firma y prueba completa con un usuario real.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/roadmapCore.db.test.js",
+     "note": "Prueba: firma de Twilio (403 sin firma o con firma falsa) y recorrido onboarding → búsqueda → visita por el webhook"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/audit/A3-webhook-http.test.js",
+     "note": "Falta la prueba completa con un usuario real y el sender de WhatsApp de producción aprobado por Meta (paso humano)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "33",
+   "name": "Soporte multimedia completo",
+   "description": "Texto, fotos, PDF, audio, botones y listas de WhatsApp Business vía Twilio.",
+   "category": "E",
+   "category_name": "Canal y Distribución",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "t_tw",
+   "status": "parcial",
+   "acceptance": "El agente envía fotos y PDF de propiedades, recibe fotos y documentos del usuario (guardados en Cloudinary) y los botones y listas funcionan.",
+   "verification": "Automática + humana",
+   "suggested_test": "Pruebas por tipo de mensaje y revisión en un teléfono real.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/webhooks/whatsapp.js:60"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:722"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/twilio.js:201"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/twilio.js:210"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:598"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Entrada: solo se lee MediaUrl0 y los demás adjuntos se ignoran. La URL llega al agente, pero ningún agente la usa ni la guarda, no se sube a Cloudinary, y el modelo solo recibe el texto '[El cliente envió una imagen sin texto]'. El audio no se transcribe y los PDF no se procesan. Salida: sendWhatsAppWithMedia no tiene llamadores; el agente no envía fotos de propiedades (get_property_details solo devuelve photos_count) y el PDF del contrato va como enlace de texto. Botones y listas son texto numerado, no interactivos nativos (no se usa contentSid). Faltan pruebas por tipo de mensaje."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Twilio Content API (contentSid) para botones y listas nativos; las plantillas que se envían fuera de sesión necesitan aprobación de Meta. Cuenta de Cloudinary configurada y un proveedor de transcripción si se procesa audio."
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "34",
+   "name": "Notificaciones proactivas inteligentes",
+   "description": "El agente decide cuándo notificar según urgencia y contexto, con límite anti-spam.",
+   "category": "E",
+   "category_name": "Canal y Distribución",
+   "stage": "1.1",
+   "unique": false,
+   "tool": "send_notification",
+   "concept": "c_alert",
+   "status": "hecho",
+   "acceptance": "Hay un límite configurable de mensajes proactivos por usuario y día. Fuera de la ventana de 24 h solo se usan plantillas aprobadas por Meta.",
+   "verification": "Automática",
+   "suggested_test": "Prueba del límite y de la selección de plantilla según la ventana.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Pruebas #34: límite diario configurable y plantilla aprobada fuera de la ventana de 24 h"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/proactive.js",
+     "note": "Fuera de la ventana de 24 h necesita una plantilla aprobada por Meta en WHATSAPP_PROACTIVE_TEMPLATES"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "35",
+   "name": "Cumplimiento TCPA (EE.UU.)",
+   "description": "Consentimiento explícito y opt-out inmediato en comunicaciones para EE. UU.",
+   "category": "E",
+   "category_name": "Canal y Distribución",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "hecho",
+   "acceptance": "El opt-in queda registrado y escribir «STOP» o «BAJA» desactiva los mensajes de inmediato.",
+   "verification": "Automática",
+   "suggested_test": "Prueba del opt-out. Útil también en RD aunque la ley sea de EE.UU.",
+   "scope": "Solo para EE.UU.",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/visitsProactive.db.test.js",
+     "note": "Pruebas #35: STOP/BAJA desactivan de inmediato (también en el primer mensaje, con la cuenta suspendida y para los avisos del motor justo después del STOP); ALTA; avisos del sistema"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/conversationContext.js",
+     "note": "Solo la respuesta a lo que el usuario acaba de escribir sale tras la baja"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/proactive.js",
+     "note": "Opt-in registrado con su fecha. Revisión legal TCPA pendiente"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "36",
+   "name": "Acceso a leads calificados",
+   "description": "Leads prefiltrados por la IA, con identidad verificada, score y preferencias claras.",
+   "category": "F",
+   "category_name": "Para Agentes Inmobiliarios",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_pro",
+   "status": "pendiente",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "La agencia aliada recibe solo leads con perfil completo y con consentimiento del usuario para compartir sus datos.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de filtrado y revisión del consentimiento.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/stripeProducts.js:17"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:573"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js:252"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/025_credit_checks.sql:15"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Ningún flujo entrega leads a agencias aliadas: no hay entidad 'agencia', ni endpoint/canal de entrega, ni regla de 'perfil completo', ni consentimiento del usuario para ceder sus datos a terceros (el único consentimiento del sistema es el de verificación crediticia). La feature 'leads' del agent_plan se declara en stripeProducts y se anuncia en Settings, pero planAllows('leads') no se usa en ningún sitio. Falta: registro de consentimiento de cesión (fecha, alcance, revocación), criterio de completitud de perfil, entrega a la agencia filtrada por ambos, y tests de filtrado y consentimiento."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal de la cesión de datos a terceros (Ley 172-13 RD) y acuerdos con agencias; decisión de producto (roadmap: posponer)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "37",
+   "name": "Acceso al inventario completo",
+   "description": "Inventario completo con búsqueda avanzada por sector, precio y disponibilidad.",
+   "category": "F",
+   "category_name": "Para Agentes Inmobiliarios",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_pro",
+   "status": "parcial",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "La agencia aliada consulta el inventario disponible con filtros, actualizado en tiempo real.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de consulta tras publicar y retirar propiedades.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:23"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/properties.js:11"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:59"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:91"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/002_create_properties.sql:7"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): GET /api/v1/properties (API key de partner) lista el inventario activo leyendo la DB en vivo, con filtros de sector, ciudad, precio, tipo y habitaciones. Lo que falta: (1) no hay filtro de disponibilidad (available_from); (2) GET/PUT /v1/properties/:id exigen owner_id === partner.id, y como properties.owner_id es FK a users, el detalle siempre da 404 y POST /v1/properties falla por la FK; (3) el agent_plan ('Inventario completo') no abre ninguna vista de inventario en el dashboard; (4) los tests solo validan el SQL de searchProperties con la DB mockeada, sin probar el endpoint v1 con API key n"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "38",
+   "name": "Herramientas IA para gestión de cartera",
+   "description": "CRM ligero con el estado de cada lead, lo conversado por la IA y dónde intervenir.",
+   "category": "F",
+   "category_name": "Para Agentes Inmobiliarios",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_pro",
+   "status": "parcial",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "El agente inmobiliario ve el estado de cada lead, las conversaciones de la IA y dónde debe intervenir.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de la vista con leads en distintos estados.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:484"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/NegotiationDetail.tsx:134"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:533"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Solo el propietario ve sus negociaciones (estado y negotiation_log del motor A2A) y puede aprobar, rechazar o contraofertar. No existe un CRM para el agente inmobiliario: users no tiene rol 'agente' (el rol 'agent' de real_estate_company_members solo se usa en el entrenamiento del agente); no hay lista de leads con su estado; las conversaciones de WhatsApp con la IA (tabla conversations) no se exponen en ningún endpoint del dashboard; y no hay marcador de 'dónde intervenir'. Faltan la vista CRM, un endpoint de conversaciones con control de acceso, los marcadores de intervención y tests con lea"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "39",
+   "name": "Plan de suscripción dedicado",
+   "description": "Suscripción mensual por acceso completo; el precio está en blanco («$$-$$»).",
+   "category": "F",
+   "category_name": "Para Agentes Inmobiliarios",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_pro",
+   "status": "parcial",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "Precio definido; el cobro recurrente funciona y el acceso se suspende si no se paga.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba en modo test de Stripe. Requiere decidir el precio y si habrá SaaS.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/stripeProducts.js:17"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/billing.js:449"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/payments.js:186"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/payments.js:249"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:570"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): El código fija un precio (US$49/mes) que el roadmap aún no ha decidido. Hay checkout de suscripción en Stripe y webhook: checkout.session.completed activa el plan y customer.subscription.deleted lo baja a basic. Lo que falta: (1) las features del plan ('leads', 'full_inventory', 'ai_tools') no se aplican en ningún sitio, así que no hay acceso real que conceder o suspender (solo custom_agent_training, que además exige rol owner/both); (2) en past_due/unpaid no se suspende el acceso; (3) no hay ninguna prueba del cobro recurrente ni de la suspensión (ni con Stripe en modo test ni con webhooks si"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Decisión de precio y de si habrá SaaS (roadmap '$$-$$'); configurar Stripe (STRIPE_PRICE_AGENT_PLAN, webhook) en test y live"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "40",
+   "name": "API white-label del agente IA",
+   "description": "Administradoras con 10+ unidades licencian el agente bajo su propia marca.",
+   "category": "G",
+   "category_name": "Para Administradoras de Propiedades",
+   "stage": "3.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_api",
+   "status": "parcial",
+   "acceptance": "Una administradora usa el agente con su propia marca, sin mención a Appartamentos, y sus datos quedan aislados de los demás clientes.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de aislamiento de datos y revisión con un cliente piloto.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:38"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:113"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:37"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:160"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/webhook.js:112"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Existe la API v1 para partners (API keys con scopes, planes, webhooks) y la personalización por inmobiliaria (nombre del agente, tono, conocimiento) aislada por company_id. Pero: (1) Marca: los mensajes del bot (bienvenida, soporte, referidos), los prompts, las cabeceras de webhooks (X-Appartamentos-*), el User-Agent y la documentación dicen 'Appartamentos'. No hay número de WhatsApp propio por cliente, y la capa de personalización queda subordinada a SedaWay y solo aplica a propietarios con compañía, no a partners de la API. (2) Aislamiento: POST /v1/contracts acepta cualquier negotiation_id,"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Cliente piloto; número de WhatsApp Business/remitente Twilio propio por marca (aprobación de Meta)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "41",
+   "name": "SDK para integración propia",
+   "description": "Toolkit (Node, Python, REST) para integrar el agente en sistemas del cliente.",
+   "category": "G",
+   "category_name": "Para Administradoras de Propiedades",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_api",
+   "status": "parcial",
+   "acceptance": "El SDK está documentado y una integración de ejemplo funciona en Node.js y Python.",
+   "verification": "Automática",
+   "suggested_test": "Ejecución de los ejemplos de la documentación.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/docs.js:11"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/docs.js:711"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/app.js:259"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/index.js:17"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/webhook.js:160"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Solo existe la parte REST: API v1 con spec OpenAPI 3.0 y Swagger UI. En el repo no hay SDK de Node ni de Python: ni paquetes, ni clientes generados, ni ejemplos ejecutables. Además: /api/v1/docs exige API key porque el v1Router (con apiAuthenticate) se monta antes que docsRouter, así que la documentación no se abre en el navegador; la doc promete firma HMAC de webhooks pero dispatchWebhook envía 'unsigned'; y endpoints documentados no funcionan (POST /v1/properties falla por FK; POST /v1/services/requests y ?category= siempre dan 400 por isIn con objetos). Faltan los SDK de Node y Python, los "
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "42",
+   "name": "Gestión multi-unidad centralizada",
+   "description": "Panel con todas las unidades, inquilinos y conversaciones de IA en tiempo real.",
+   "category": "G",
+   "category_name": "Para Administradoras de Propiedades",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_api",
+   "status": "parcial",
+   "acceptance": "El dashboard muestra todas las unidades, inquilinos y conversaciones, y los roles limitan lo que ve cada usuario.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de permisos por rol.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:470"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/app/dashboard/page.tsx:128"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/038_company_agent_training.sql:21"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/agentPersonalization.js:258"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/adminControl.js:175"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): El propietario ve sus propiedades, negociaciones, contratos, cobros y visitas en tiempo real (SSE), y hay roles de plataforma (client, owner, both, admin, provider). Pero no hay gestión multi-unidad para una administradora: los datos se filtran por el owner_id del usuario, no por la compañía. Los roles de miembro (owner, admin, agent, viewer) solo se usan en el entrenamiento del agente y en el plano de control, no para limitar qué unidades o inquilinos ve cada miembro. Tampoco hay vista de inquilinos ni de conversaciones de la IA. Faltan la vista consolidada por compañía, permisos por rol de m"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "43",
+   "name": "Integración con MLS (EE.UU.)",
+   "description": "Sincronización bidireccional con MLS vía RESO API o Spark API.",
+   "category": "G",
+   "category_name": "Para Administradoras de Propiedades",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_api",
+   "status": "pendiente",
+   "acceptance": "La sincronización bidireccional con RESO o Spark funciona en su entorno de pruebas.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba en sandbox y acuerdo de acceso a MLS.",
+   "scope": "Solo para EE.UU.",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:73"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay ningún conector MLS: buscar 'MLS', 'RESO', 'Spark' u 'OData' no da resultados. La única ingesta externa de inventario es la API v1 propia, y su POST está roto por la FK. Faltan el cliente RESO Web API/Spark, el mapeo de campos (Data Dictionary), la sincronización bidireccional (traer listados y enviar cambios), la resolución de conflictos, los jobs programados y las pruebas contra el sandbox."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Acuerdo de acceso a MLS y credenciales RESO Web API / Spark API (FBS) con sandbox; solo EE.UU."
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "44",
+   "name": "Marketplace de proveedores",
+   "description": "Plomeros, electricistas, mudanzas y otros proveedores verificados dentro de WhatsApp.",
+   "category": "H",
+   "category_name": "Marketplace de Servicios",
+   "stage": "2.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_conc",
+   "status": "parcial",
+   "acceptance": "Los proveedores verificados están registrados por categoría y se pueden consultar desde WhatsApp.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de consulta y revisión del proceso de verificación de proveedores.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/006_create_services.sql:24"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/servicesService.js:67"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:261"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:318"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2244"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Los proveedores se registran con categorías (service_providers.categories) y se pueden consultar desde WhatsApp con la tool get_providers_for_category. Pero no hay proceso de verificación: el auto-registro deja is_verified=false y status 'active', ningún endpoint pone is_verified=TRUE (el admin solo cambia el status), y getProvidersByCategory devuelve también los no verificados. Faltan el flujo de verificación (admin más evidencia), mostrar solo verificados en la consulta por WhatsApp y tests de consulta y verificación."
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "45",
+   "name": "Coordinación automática trilateral",
+   "description": "Avería reportada → propietario aprueba → proveedor recibe la orden, en minutos.",
+   "category": "H",
+   "category_name": "Marketplace de Servicios",
+   "stage": "2.1",
+   "unique": true,
+   "tool": "coordinate_vendor",
+   "concept": "c_conc",
+   "status": "parcial",
+   "acceptance": "Avería reportada → aprobación del propietario → orden al proveedor en menos de 10 minutos, todo registrado.",
+   "verification": "Automática",
+   "suggested_test": "Flujo simulado con medición de tiempo.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:175"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:875"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1050"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/providers.js:238"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:303"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Las piezas existen por separado: el inquilino crea la solicitud, el propietario aprueba o asigna con manage_service_request y el proveedor la ve en su panel. Pero no hay coordinación automática: la tool coordinate_vendor no existe; crear la solicitud por WhatsApp no avisa al propietario (solo hay SSE desde el dashboard y solo si viene property_id); aprobar o asignar no notifica al proveedor (tiene que consultar /api/providers/me/requests); no se guardan tiempos por etapa ni se mide el objetivo de 10 minutos; y el flujo no queda auditado. Además, manage_service_request en el serviceAgent no ver"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Plantillas de WhatsApp aprobadas por Meta para mensajes que inicia el negocio a propietario o proveedor fuera de la ventana de 24 h"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "46",
+   "name": "Sistema de comisiones sobre transacciones",
+   "description": "Comisión de 15–20% sobre cada transacción del marketplace, cobrada con Stripe.",
+   "category": "H",
+   "category_name": "Marketplace de Servicios",
+   "stage": "2.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_conc",
+   "status": "pendiente",
+   "acceptance": "La comisión se calcula y cobra automáticamente por cada transacción completada.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba en modo test y acuerdo firmado con proveedores.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/033_scaling_reaudit.sql:50"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/marketplace.js:223"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/providers.js:395"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No se calcula ni se cobra ninguna comisión. Los pedidos del marketplace y los servicios completados no pasan por Stripe (solo se guardan los precios); no hay columnas de comisión, ni Stripe Connect (application_fee_amount/transfer_data), ni pagos a proveedores. Faltan el modelo de comisión (15–20%), el cobro automático con Stripe Connect al completar, la conciliación y tests en modo test."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Acuerdo firmado con proveedores y alta en Stripe Connect (cuentas conectadas con KYC)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "47",
+   "name": "Generación de contratos digitales",
+   "description": "Al aprobarse el preacuerdo genera el contrato con los términos negociados, listo para firmar.",
+   "category": "I",
+   "category_name": "Contratos y Pagos",
+   "stage": "2.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_contr",
+   "status": "hecho",
+   "acceptance": "Tras la aprobación, se genera el contrato con exactamente los términos negociados, sobre una plantilla revisada por un abogado.",
+   "verification": "Automática + humana",
+   "suggested_test": "Comparación de términos y revisión legal de la plantilla.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas: el contrato sale con exactamente los términos aprobados en el preacuerdo, también si se genera desde el panel o al abrir una disputa y aunque el propietario cambie sus condiciones; nunca antes de la aprobación de las dos partes"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/agreementTerms.js",
+     "note": "Falta la revisión de la plantilla por un abogado (paso humano para «verificado»)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "48",
+   "name": "Firma electrónica con validez legal",
+   "description": "Firma digital válida en RD y EE. UU., sin imprimir ni reunirse.",
+   "category": "I",
+   "category_name": "Contratos y Pagos",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_contr",
+   "status": "parcial",
+   "acceptance": "El contrato se firma con un proveedor de firma electrónica con validez legal en RD y el documento final queda archivado.",
+   "verification": "Automática + humana",
+   "suggested_test": "Firma de prueba y confirmación legal de la validez.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/Contract.js:88"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/contracts.js:380"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/contracts.js:480"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:173"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/contractGenerator.js:563"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): La firma es propia: un SHA-256 de (contractId:role:timestamp:ip), no del contenido del documento. No hay proveedor de firma electrónica con validez legal (RD: entidad de certificación acreditada bajo Ley 126-02; EE. UU.: ESIGN/UETA con divulgaciones). La identidad se autodeclara: identity_verified es editable por la propia parte en PUT /:id/identity, que no se bloquea tras la firma y regenera el HTML. En la API v1 un partner puede firmar como cualquiera de las partes. El PDF final se sube a Cloudinary en setImmediate sin reintentos, y la URL /verify citada en el contrato no existe. Sin pruebas"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Contrato con proveedor de firma electrónica válido en RD y EE. UU.; confirmación legal"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "49",
+   "name": "Procesamiento de pagos vía Stripe",
+   "description": "Suscripciones, depósitos, tarifas de éxito y rentas con tarjeta, ACH y métodos locales.",
+   "category": "I",
+   "category_name": "Contratos y Pagos",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "t_st",
+   "status": "parcial",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "Un cobro de prueba en modo test se completa y queda registrado; los webhooks de Stripe actualizan el estado del pago.",
+   "verification": "Automática",
+   "suggested_test": "Prueba con las tarjetas de prueba de Stripe.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/payments.js:94"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/payments.js:133"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/payments.js:277"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/billing.js:243"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/billing.js:218"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): El código existe: PaymentIntent del depósito, Checkout de suscripciones, cobro off-session de renta y webhook con firma e idempotencia que marca deposit_paid y crea el asiento en payments. Pero no hay ninguna prueba automática, ni con Stripe test mode ni con SDK simulado y webhook firmado. El webhook no maneja payment_intent.payment_failed ni reembolsos, y la renta no se concilia por webhook. No hay ACH (SetupIntent solo acepta 'card'). Azul tokeniza tarjetas, pero chargeDataVaultToken no se usa en ningún sitio (solo hay pruebas unitarias de Azul, no de Stripe). Las tarifas de éxito no existen"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Claves de Stripe en modo test (no bloquea el desarrollo); alcance 'posponer'"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "50",
+   "name": "Penalizaciones por cancelación",
+   "description": "Cargo automático de $5–15 cuando el inquilino cancela una reserva confirmada.",
+   "category": "I",
+   "category_name": "Contratos y Pagos",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "t_st",
+   "status": "pendiente",
+   "scope_note": "propuesta: posponer",
+   "acceptance": "Cancelar una reserva confirmada genera el cargo según una política que el inquilino aceptó antes; queda registro.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba del cargo y revisión legal de la política.",
+   "scope": "Propuesta: posponer",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2685"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2700"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/013_invoices_payments.sql:59"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay política de cancelación aceptada, ni cargo, ni registro. PUT /api/visits/:id/cancel solo cambia el estado, y payments.type no contempla penalizaciones. Falta: política versionada con aceptación registrada, cargo de $5–15 al cancelar una visita confirmada, asiento en el ledger y pruebas."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal de la política; decisión de producto (alcance 'posponer')"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "51",
+   "name": "Tarifas de éxito sobre acuerdos cerrados",
+   "description": "Cargo único de un mes de renta cuando cierra un acuerdo negociado por IA.",
+   "category": "I",
+   "category_name": "Contratos y Pagos",
+   "stage": "2.0",
+   "unique": true,
+   "tool": null,
+   "concept": "c_corr",
+   "status": "pendiente",
+   "acceptance": "Al cerrarse un acuerdo A2A aprobado, el cargo correspondiente se genera una sola vez.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de cargo único. Requiere confirmar el modelo de cobro.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:386"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/models/Negotiation.js:111"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/013_invoices_payments.sql:59"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/stripeProducts.js:9"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Al cerrar el acuerdo (finalizeAgreement / processApproval) no se genera ningún cargo. No existe el tipo success_fee en payments ni un control de cargo único por negociación (p. ej. índice único por negotiation_id). Faltan el cargo único idempotente, el asiento y su prueba."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Confirmación del modelo de cobro"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "52",
+   "name": "Espacios publicitarios para proyectos",
+   "description": "Constructoras promocionan proyectos a usuarios cuyo perfil coincide ($500–2K/mes).",
+   "category": "J",
+   "category_name": "Constructoras, Bancos y Aliados",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ali",
+   "status": "pendiente",
+   "acceptance": "Los anuncios se muestran solo a perfiles que coinciden y que consintieron recibir comunicaciones, con reporte de alcance.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de segmentación y revisión del consentimiento.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/propertyNotifier.js:36"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/001_create_users.sql:7"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay módulo de anuncios ni campañas para constructoras: sin tablas, endpoints ni reportes de alcance. Lo más parecido es propertyNotifier, que segmenta por las preferencias guardadas para avisar de propiedades nuevas, pero envía mensajes proactivos sin comprobar ningún opt-in, y users no tiene campos de consentimiento de comunicaciones. Faltan el modelo de anunciante y campaña, la segmentación por perfil, el consentimiento de marketing registrado, la entrega, el reporte de alcance y tests de segmentación y consentimiento."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Acuerdos comerciales con constructoras; revisión legal del consentimiento para comunicaciones comerciales"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "53",
+   "name": "Alianzas para financiamiento e hipotecas",
+   "description": "Preaprobación de hipoteca con bancos locales dentro de la conversación.",
+   "category": "J",
+   "category_name": "Constructoras, Bancos y Aliados",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ali",
+   "status": "pendiente",
+   "acceptance": "Con consentimiento, la preaprobación se solicita al banco aliado y la respuesta llega dentro del chat.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba con el entorno del banco y acuerdo firmado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:200"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No hay integración bancaria ni de hipotecas: no aparece ninguna referencia a hipoteca, banco o preaprobación. Solo existe un patrón reutilizable de consentimiento por WhatsApp (VERIFICAR / NO VERIFICAR) para la verificación crediticia. Faltan la tool del agente para pedir la preaprobación, el registro del consentimiento, el cliente de la API del banco, la recepción asíncrona de la respuesta y su entrega en el chat, y pruebas contra el entorno del banco."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Acuerdo firmado con un banco aliado y acceso a su API/sandbox de preaprobación"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "54",
+   "name": "Integración con productos bancarios",
+   "description": "Seguros de hogar e inquilino y líneas de crédito ofrecidos en contexto.",
+   "category": "J",
+   "category_name": "Constructoras, Bancos y Aliados",
+   "stage": "3.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_ali",
+   "status": "pendiente",
+   "acceptance": "Las ofertas se muestran en contexto y solo con consentimiento, y cada referido queda registrado.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba de registro de referidos y acuerdo con el aliado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/insurance.js:15"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/referrals.js:26"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No se ofrecen productos de aliados (seguros de hogar o inquilino, líneas de crédito). insurance.js es un seguro de renta propio de SedaWay cuya createPolicy no se llama en ningún sitio, y referrals.js es el programa de referidos entre usuarios, no de referidos a aliados. Faltan el catálogo de productos de aliados, el disparo en contexto desde el agente, el consentimiento previo, el registro de cada referido (aliado, usuario, producto, fecha, estado) y tests."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Acuerdo con aseguradora o banco aliado y revisión regulatoria de la intermediación de seguros y crédito"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "55",
+   "name": "Memoria de conversación propietaria",
+   "description": "Meses de contexto acumulado por usuario: el costo de cambio más alto del mercado.",
+   "category": "K",
+   "category_name": "Inteligencia y Data",
+   "stage": "Continua",
+   "unique": true,
+   "tool": null,
+   "concept": "c_mem",
+   "status": "parcial",
+   "acceptance": "Se mide periódicamente qué porcentaje de usuarios tiene perfil completo y cuántas respuestas usan la memoria; la exportación y eliminación de datos a pedido funcionan.",
+   "verification": "Automática",
+   "suggested_test": "Reporte periódico y prueba de exportación y borrado.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/memory.js:99"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/utils/contextBuilder.js:16"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2088"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:353"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/app/legal/terms/page.tsx:134"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: exportación de todos los datos del usuario (GET /api/users/me/export y botón en Ajustes, con prueba). Faltan las métricas periódicas de memoria y el borrado a pedido."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): La memoria persistente existe (agent_memory con resumen, hechos clave, búsquedas y propiedades vistas) y se inyecta en cada turno, pero falta todo lo que pide el criterio: (1) nada mide periódicamente el % de usuarios con perfil completo ni cuántas respuestas usan la memoria (no hay job en el scheduler, ni métrica, ni marca en conversations); (2) no hay exportación: el botón 'Exportar mis datos' de Settings no tiene handler ni endpoint; (3) el usuario no puede pedir el borrado: solo existe DELETE /api/admin/users/:id para el admin, que se bloquea si hay negociaciones o propiedades activas y pu"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "56",
+   "name": "Flywheel de datos locales",
+   "description": "Cada acuerdo cerrado enriquece el modelo de precios por sector.",
+   "category": "K",
+   "category_name": "Inteligencia y Data",
+   "stage": "Continua",
+   "unique": true,
+   "tool": null,
+   "concept": "c_mem",
+   "status": "hecho",
+   "acceptance": "Cada acuerdo cerrado actualiza la tabla de precios por sector, y una consulta por sector devuelve datos al día.",
+   "verification": "Automática",
+   "suggested_test": "Cierre de acuerdo simulado y consulta posterior.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/ownerOps.db.test.js",
+     "note": "Prueba #56: cada acuerdo cerrado actualiza la renta media del sector (GET /api/market/sectors/:sector, para propietarios)"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/marketData.js",
+     "note": "Cada tramo se publica redondeado a US$10 y solo con MARKET_MIN_DEALS acuerdos (por defecto 5): la media no delata la renta de un contrato"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "57",
+   "name": "Audit trail completo",
+   "description": "Registro de cada decisión de la IA para cumplimiento y mejora del modelo (7 años).",
+   "category": "K",
+   "category_name": "Inteligencia y Data",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "hecho",
+   "acceptance": "Cada decisión del agente (sugerencias, rechazos, negociaciones) se registra con fecha, datos de entrada y resultado; los registros no se pueden editar y se pueden consultar.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de registro e intento de modificación.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #57: tools y decisiones del motor registradas con entrada y resultado; no se pueden editar ni borrar; consulta del admin"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/decisionLog.js"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/045_audit_trail.sql",
+     "note": "Retención de 7 años pendiente de confirmación legal"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "58",
+   "name": "Métricas y analytics avanzados",
+   "description": "Dashboards con tiempo de colocación, conversión de visitas e ingresos proyectados.",
+   "category": "K",
+   "category_name": "Inteligencia y Data",
+   "stage": "2.0",
+   "unique": false,
+   "tool": null,
+   "concept": "c_dash",
+   "status": "parcial",
+   "acceptance": "El dashboard muestra tiempo de colocación y conversión de visitas a contratos, y las cifras coinciden con la base de datos.",
+   "verification": "Automática",
+   "suggested_test": "Cálculo con datos conocidos.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/reports.js:278"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/reports.js:9"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Reports.tsx:202"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2313"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/022_property_visits.sql:7"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Hay un dashboard de reportes del propietario (ocupación, ingresos e ingresos proyectados del pipeline, conversión de negociación a acuerdo y días al cierre) y un funnel en el panel admin. Pero no se calcula el 'tiempo de colocación' (de la publicación al arriendo; avg_close_days mide solo la duración de la negociación), ni la 'conversión de visitas a contratos' (property_visits no se cruza con contracts en ningún reporte). reports.js no tiene tests; el único test relacionado valida los conteos de /dashboard/stats con la DB mockeada. Faltan las dos métricas, mostrarlas en el dashboard y un test"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "59",
+   "name": "Cumplimiento Ley 172-13 (RD)",
+   "description": "Consentimiento explícito y derechos de acceso y eliminación de datos; el catálogo lo marca «Implementado».",
+   "category": "L",
+   "category_name": "Cumplimiento Regulatorio",
+   "stage": "1.1",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "parcial",
+   "acceptance": "Se registra el consentimiento explícito (fecha y texto aceptado) antes de guardar datos personales. El usuario puede pedir ver y borrar sus datos, y se ejecuta.",
+   "verification": "Automática + humana",
+   "suggested_test": "Prueba del flujo de consentimiento y borrado, más revisión legal.",
+   "scope": "Núcleo",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:122"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:151"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1570"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2110"
+    },
+    {
+     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:353"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: exportación de datos y alta de comunicaciones registrada con su fecha. Falta el consentimiento explícito (fecha y texto) antes de guardar datos personales, el borrado a pedido y la revisión legal."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No se registra consentimiento general (fecha y texto/versión) antes de guardar datos. El router crea el usuario y guarda el primer mensaje e initial_intent sin ningún aviso, y el registro de proveedores tampoco pide aceptación; el único consentimiento registrado es el del credit check. Acceso: GET /api/users/me solo devuelve el perfil (no conversaciones, memoria ni verificaciones), y el botón 'Exportar mis datos' no tiene handler. Borrado: solo lo hace un admin (DELETE /api/admin/users/:id), sin flujo a pedido del usuario; falla con FK 23503 si hay negociaciones o facturas, y credit_checks con"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal (Ley 172-13)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "60",
+   "name": "Cumplimiento Fair Housing Act (EE.UU.)",
+   "description": "Auditoría de sesgos y aprobación humana obligatoria para cualquier rechazo.",
+   "category": "L",
+   "category_name": "Cumplimiento Regulatorio",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "pendiente",
+   "acceptance": "Los prompts y filtros excluyen atributos protegidos, y una batería de casos de sesgo no produce rechazos discriminatorios.",
+   "verification": "Automática + humana",
+   "suggested_test": "Batería de pruebas de sesgo y revisión legal.",
+   "scope": "Solo para EE.UU.",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:61"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:132"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/agents/prompts/ownerPrompt.js:136"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/020_property_agent_rules.sql:6"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): Los prompts no excluyen atributos protegidos. Las reglas libres del propietario (agent_rules) y la configuración de la inmobiliaria se inyectan como 'OBLIGATORIO RESPETAR' sin validar contenido discriminatorio. No hay aprobación humana para rechazos ni batería de casos de sesgo. Faltan: guardrails en los prompts, validación o bloqueo de agent_rules, suite de pruebas de sesgo y revisión legal."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Revisión legal (Fair Housing Act)"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "61",
+   "name": "Cumplimiento FCRA, CCPA y TCPA",
+   "description": "Cumplimiento de crédito, privacidad y comunicaciones para operar en EE. UU.",
+   "category": "L",
+   "category_name": "Cumplimiento Regulatorio",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "parcial",
+   "acceptance": "Lista de cumplimiento aprobada por un abogado, y la eliminación de datos a pedido del usuario funciona.",
+   "verification": "Automática + humana",
+   "suggested_test": "Revisión legal y prueba del borrado.",
+   "scope": "Solo para EE.UU.",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2097"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2110"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/004_create_negotiations.sql:7"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/025_credit_checks.sql:11"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/retention.js:49"
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Avance en esta rama: exportación de datos y baja STOP en todos los envíos automáticos. Falta el borrado a pedido y la lista de cumplimiento aprobada por un abogado."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Falta (auditoría): No existe una lista de cumplimiento FCRA/CCPA/TCPA aprobada por un abogado. El borrado solo lo hace un admin, no a pedido del usuario, y falla por FKs sin ON DELETE (negotiations, invoices, payments); no hay anonimización, y credit_checks retiene la PII del sujeto. Tampoco hay opt-out TCPA (STOP/baja) en WhatsApp, ni aviso de acción adversa FCRA, ni derechos CCPA (acceso, portabilidad, no venta). Sin pruebas del borrado."
+    },
+    {
+     "path": "docs/ROADMAP_ESTADO.md",
+     "note": "Dependencia externa: Abogado: lista de cumplimiento FCRA/CCPA/TCPA aprobada"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "62",
+   "name": "Aprobación humana obligatoria para rechazos",
+   "description": "La IA puede aprobar pero no rechazar sola: todo rechazo pasa por revisión humana.",
+   "category": "L",
+   "category_name": "Cumplimiento Regulatorio",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "hecho",
+   "acceptance": "El sistema no puede enviar un rechazo a un candidato sin una aprobación humana registrada.",
+   "verification": "Automática",
+   "suggested_test": "Intento de rechazo sin aprobación que debe fallar.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #62: sin aprobación humana registrada el candidato no recibe ningún rechazo"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/database/migrations/044_human_rejection_consent.sql"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  },
+  {
+   "number": "63",
+   "name": "Consentimiento explícito para verificaciones",
+   "description": "Cada verificación requiere consentimiento documentado y revocable (opt-in).",
+   "category": "L",
+   "category_name": "Cumplimiento Regulatorio",
+   "stage": "1.2",
+   "unique": false,
+   "tool": null,
+   "concept": "c_cumpl",
+   "status": "hecho",
+   "acceptance": "Cada verificación requiere un consentimiento explícito registrado y revocable; tras revocarlo no se hacen nuevas verificaciones.",
+   "verification": "Automática",
+   "suggested_test": "Prueba de verificación antes y después de revocar.",
+   "scope": "Planificado",
+   "evidence": [
+    {
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationRules.db.test.js",
+     "note": "Pruebas #63: consentimiento con su texto, revocable por WhatsApp o panel; tras revocar no se verifica ni se reutiliza"
+    },
+    {
+     "path": "AppPartaments/appartamentos-backend/src/services/creditCheck.js"
+    }
+   ],
+   "verified_by": "",
+   "verified_at": ""
+  }
+ ]
+}
