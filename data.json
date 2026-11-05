@@ -2708,30 +2708,27 @@
    "unique": false,
    "tool": null,
    "concept": "c_api",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "El dashboard muestra todas las unidades, inquilinos y conversaciones, y los roles limitan lo que ve cada usuario.",
    "verification": "Automática",
    "suggested_test": "Prueba de permisos por rol.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:470"
+     "path": "AppPartaments/appartamentos-backend/tests/db/companyPortfolio.db.test.js",
+     "note": "Prueba #42: matriz de permisos por rol, aislamiento entre empresas y ningún límite de negociación en las respuestas"
     },
     {
-     "path": "AppPartaments/appartamentos-dashboard/app/dashboard/page.tsx:128"
+     "path": "AppPartaments/appartamentos-backend/src/services/companyPortfolio.js",
+     "note": "Matriz: owner/admin todo; agent solo sus unidades asignadas; viewer sin el texto de las conversaciones"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/database/migrations/038_company_agent_training.sql:21"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/services/agentPersonalization.js:258"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/adminControl.js:175"
+     "path": "AppPartaments/appartamentos-dashboard/components/CompanyPortfolio.tsx",
+     "note": "Vista «Mi inmobiliaria» del panel"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): El propietario ve sus propiedades, negociaciones, contratos, cobros y visitas en tiempo real (SSE), y hay roles de plataforma (client, owner, both, admin, provider). Pero no hay gestión multi-unidad para una administradora: los datos se filtran por el owner_id del usuario, no por la compañía. Los roles de miembro (owner, admin, agent, viewer) solo se usan en el entrenamiento del agente y en el plano de control, no para limitar qué unidades o inquilinos ve cada miembro. Tampoco hay vista de inquilinos ni de conversaciones de la IA. Faltan la vista consolidada por compañía, permisos por rol de m"
+     "note": "Falta probarla con una inmobiliaria real con varios miembros"
     }
    ],
    "verified_by": "",
@@ -3189,34 +3186,27 @@
    "unique": true,
    "tool": null,
    "concept": "c_mem",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Se mide periódicamente qué porcentaje de usuarios tiene perfil completo y cuántas respuestas usan la memoria; la exportación y eliminación de datos a pedido funcionan.",
    "verification": "Automática",
    "suggested_test": "Reporte periódico y prueba de exportación y borrado.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/memory.js:99"
+     "path": "AppPartaments/appartamentos-backend/tests/db/memoryMetrics.db.test.js",
+     "note": "Prueba #55: foto con datos conocidos y porcentajes exactos, marca de memoria en cada respuesta, una sola foto por día, exportación"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/utils/contextBuilder.js:16"
+     "path": "AppPartaments/appartamentos-backend/src/services/memoryMetrics.js",
+     "note": "Definiciones de perfil completo por rol y de respuesta que usa la memoria; job diario a las 00:20"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2088"
-    },
-    {
-     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:353"
-    },
-    {
-     "path": "AppPartaments/appartamentos-dashboard/app/legal/terms/page.tsx:134"
+     "path": "AppPartaments/appartamentos-backend/src/services/dataErasure.js",
+     "note": "Borrado a pedido (llegó con la #59)"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Avance en esta rama: exportación de todos los datos del usuario (GET /api/users/me/export y botón en Ajustes, con prueba). Faltan las métricas periódicas de memoria y el borrado a pedido."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): La memoria persistente existe (agent_memory con resumen, hechos clave, búsquedas y propiedades vistas) y se inyecta en cada turno, pero falta todo lo que pide el criterio: (1) nada mide periódicamente el % de usuarios con perfil completo ni cuántas respuestas usan la memoria (no hay job en el scheduler, ni métrica, ni marca en conversations); (2) no hay exportación: el botón 'Exportar mis datos' de Settings no tiene handler ni endpoint; (3) el usuario no puede pedir el borrado: solo existe DELETE /api/admin/users/:id para el admin, que se bloquea si hay negociaciones o propiedades activas y pu"
+     "note": "La foto necesita RUN_SCHEDULER=true; las respuestas anteriores al despliegue no cuentan"
     }
    ],
    "verified_by": "",
