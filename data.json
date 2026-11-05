@@ -1816,31 +1816,23 @@
    "unique": true,
    "tool": "coordinate_vendor",
    "concept": "c_conc",
-   "status": "pendiente",
+   "status": "hecho",
    "acceptance": "Un reporte de avería genera el contacto con un proveedor y solo se notifica al propietario si hay una decisión que tomar.",
    "verification": "Automática + humana",
    "suggested_test": "Prueba del flujo. Depende del marketplace de la Etapa 2.1.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:175"
+     "path": "AppPartaments/appartamentos-backend/tests/db/vendorCoordination.db.test.js",
+     "note": "Prueba #17: la avería se ordena al mejor proveedor verificado y el propietario no recibe nada si no hay decisión; sin proveedor o por encima de su límite, decide el propietario"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1050"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/providers.js:238"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:875"
+     "path": "AppPartaments/appartamentos-backend/src/utils/vendorRules.js",
+     "note": "Reglas de decisión del propietario y ranking de proveedores"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): No existe la tool coordinate_vendor ni ningún envío automático a proveedores; solo existe la base. Una avería crea una service_request. Si llega por WhatsApp no se notifica a nadie, aunque el mensaje promete que 'un especialista se pondrá en contacto'; si llega por la API REST se notifica siempre al propietario por SSE. Los proveedores solo la ven si consultan su panel, y el propietario asigna a mano. Falta: elegir y contactar al proveedor automáticamente, reglas de cuándo hace falta una decisión del propietario (costo, cotización, urgencia), notificarle solo en ese caso y una prueba del flujo"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Marketplace de proveedores de la Etapa 2.1 con proveedores reales dados de alta (acuerdos comerciales) y plantillas de WhatsApp aprobadas para contactarlos"
+     "note": "Producción: plantillas aprobadas por Meta (service_order, service_owner_decision, service_update) y proveedores reales verificados con cuenta de usuario"
     }
    ],
    "verified_by": "",
@@ -2796,34 +2788,23 @@
    "unique": true,
    "tool": "coordinate_vendor",
    "concept": "c_conc",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Avería reportada → aprobación del propietario → orden al proveedor en menos de 10 minutos, todo registrado.",
    "verification": "Automática",
    "suggested_test": "Flujo simulado con medición de tiempo.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:175"
+     "path": "AppPartaments/appartamentos-backend/tests/db/vendorCoordination.db.test.js",
+     "note": "Prueba #45: aprobación → orden en el acto, tiempo medido con reloj controlado contra la meta de 10 minutos, registro de solo inserción, paso al siguiente proveedor si la orden vence"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/ownerAgent.js:875"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1050"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/providers.js:238"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:303"
+     "path": "AppPartaments/appartamentos-backend/src/services/vendorCoordination.js",
+     "note": "Estados con marca de tiempo por etapa y métricas en /metrics"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Las piezas existen por separado: el inquilino crea la solicitud, el propietario aprueba o asigna con manage_service_request y el proveedor la ve en su panel. Pero no hay coordinación automática: la tool coordinate_vendor no existe; crear la solicitud por WhatsApp no avisa al propietario (solo hay SSE desde el dashboard y solo si viene property_id); aprobar o asignar no notifica al proveedor (tiene que consultar /api/providers/me/requests); no se guardan tiempos por etapa ni se mide el objetivo de 10 minutos; y el flujo no queda auditado. Además, manage_service_request en el serviceAgent no ver"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Plantillas de WhatsApp aprobadas por Meta para mensajes que inicia el negocio a propietario o proveedor fuera de la ventana de 24 h"
+     "note": "Falta un recordatorio si el propietario no responde; probar con WhatsApp real"
     }
    ],
    "verified_by": "",
