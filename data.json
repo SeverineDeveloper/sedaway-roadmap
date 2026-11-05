@@ -2368,34 +2368,27 @@
    "unique": false,
    "tool": null,
    "concept": "t_tw",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "El agente envía fotos y PDF de propiedades, recibe fotos y documentos del usuario (guardados en Cloudinary) y los botones y listas funcionan.",
    "verification": "Automática + humana",
    "suggested_test": "Pruebas por tipo de mensaje y revisión en un teléfono real.",
    "scope": "Núcleo",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/webhooks/whatsapp.js:60"
+     "path": "AppPartaments/appartamentos-backend/tests/db/multimedia.db.test.js",
+     "note": "Prueba #33 por tipo de mensaje (texto, fotos, PDF, nota de voz, no compatible), envío de fotos y del contrato en PDF con enlace firmado, botones y listas nativos con respaldo de texto"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:722"
+     "path": "AppPartaments/appartamentos-backend/src/services/inboundMedia.js",
+     "note": "Adjuntos guardados como privados en Cloudinary; el agente recibe la imagen o el PDF real en el turno actual"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/twilio.js:201"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/services/twilio.js:210"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/clientAgent.js:598"
+     "path": "AppPartaments/appartamentos-backend/src/services/interactive.js",
+     "note": "Content API de Twilio con TWILIO_NATIVE_INTERACTIVE=true; sin ella, texto numerado"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Entrada: solo se lee MediaUrl0 y los demás adjuntos se ignoran. La URL llega al agente, pero ningún agente la usa ni la guarda, no se sube a Cloudinary, y el modelo solo recibe el texto '[El cliente envió una imagen sin texto]'. El audio no se transcribe y los PDF no se procesan. Salida: sendWhatsAppWithMedia no tiene llamadores; el agente no envía fotos de propiedades (get_property_details solo devuelve photos_count) y el PDF del contrato va como enlace de texto. Botones y listas son texto numerado, no interactivos nativos (no se usa contentSid). Faltan pruebas por tipo de mensaje."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Twilio Content API (contentSid) para botones y listas nativos; las plantillas que se envían fuera de sesión necesitan aprobación de Meta. Cuenta de Cloudinary configurada y un proveedor de transcripción si se procesa audio."
+     "note": "Falta la revisión en un teléfono real y confirmar la Content API en la cuenta de Twilio. Las notas de voz no se transcriben (no hay proveedor contratado)"
     }
    ],
    "verified_by": "",
@@ -3337,38 +3330,27 @@
    "unique": false,
    "tool": null,
    "concept": "c_cumpl",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Se registra el consentimiento explícito (fecha y texto aceptado) antes de guardar datos personales. El usuario puede pedir ver y borrar sus datos, y se ejecuta.",
    "verification": "Automática + humana",
    "suggested_test": "Prueba del flujo de consentimiento y borrado, más revisión legal.",
    "scope": "Núcleo",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:122"
+     "path": "AppPartaments/appartamentos-backend/tests/db/privacyConsent.db.test.js",
+     "note": "Prueba #59: consentimiento antes de guardar nada (WhatsApp, panel y proveedores), exportación con los consentimientos y borrado a pedido que se ejecuta"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:151"
+     "path": "AppPartaments/appartamentos-backend/src/legal/privacyNotice.js",
+     "note": "Texto provisional 2026-11-borrador, pendiente de revisión legal"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:1570"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2110"
-    },
-    {
-     "path": "AppPartaments/appartamentos-dashboard/components/Settings.tsx:353"
+     "path": "AppPartaments/appartamentos-backend/src/services/dataErasure.js",
+     "note": "Qué se borra y qué se conserva seudonimizado, y por qué"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Avance en esta rama: exportación de datos y alta de comunicaciones registrada con su fecha. Falta el consentimiento explícito (fecha y texto) antes de guardar datos personales, el borrado a pedido y la revisión legal."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): No se registra consentimiento general (fecha y texto/versión) antes de guardar datos. El router crea el usuario y guarda el primer mensaje e initial_intent sin ningún aviso, y el registro de proveedores tampoco pide aceptación; el único consentimiento registrado es el del credit check. Acceso: GET /api/users/me solo devuelve el perfil (no conversaciones, memoria ni verificaciones), y el botón 'Exportar mis datos' no tiene handler. Borrado: solo lo hace un admin (DELETE /api/admin/users/:id), sin flujo a pedido del usuario; falla con FK 23503 si hay negociaciones o facturas, y credit_checks con"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Revisión legal (Ley 172-13)"
+     "note": "Falta la revisión legal del aviso y de la página /legal/privacy para pasar a verificado"
     }
    ],
    "verified_by": "",
