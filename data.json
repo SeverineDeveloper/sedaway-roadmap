@@ -1880,34 +1880,23 @@
    "unique": true,
    "tool": null,
    "concept": "c_a2a",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Cada parte define sus límites en privado, se guardan cifrados y el agente de la otra parte nunca los recibe.",
    "verification": "Automática",
    "suggested_test": "Inspección de los datos que recibe cada agente.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/database/migrations/004_create_negotiations.sql:12"
+     "path": "AppPartaments/appartamentos-backend/tests/db/negotiationLimits.db.test.js",
+     "note": "Prueba #19: límites cifrados en reposo, negociación completa con ellos cifrados, ninguna ruta devuelve el límite de la otra parte, backfill idempotente"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/models/negotiationVisibility.js:19"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:631"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:761"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/negotiationAgent.js:130"
+     "path": "AppPartaments/appartamentos-backend/src/utils/limitsCipher.js",
+     "note": "AES-256-GCM en la app con LIMITS_ENCRYPTION_KEY; cada valor ligado a su campo"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Avance en esta rama: los límites de cada parte nunca llegan a la otra (#25, #62). Falta guardarlos cifrados."
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Cada parte define sus límites por separado: price_min por propiedad, max_negotiate en el onboarding o con update_memory, y los mínimos de la inmobiliaria. Pero se guardan sin cifrar: properties.price_min, negotiations.owner_min/client_max y users.agent_config. El aislamiento se cumple en las tools de ambos agentes y en GET /dashboard/negotiations y GET /negotiations/:id, con pruebas. En cambio, POST /negotiations/:id/approve, /reject y /counter-response devuelven la fila cruda con el límite de la otra parte. Además, el acuerdo se fija en client_max (el propietario conoce el techo del cliente),"
+     "note": "Producción: definir la clave y ejecutar npm run limits:encrypt. Decisión de producto pendiente: el acuerdo se cierra en la oferta máxima del cliente. Copias en texto plano en tablas de solo inserción"
     }
    ],
    "verified_by": "",
@@ -2775,30 +2764,23 @@
    "unique": false,
    "tool": null,
    "concept": "c_conc",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "Los proveedores verificados están registrados por categoría y se pueden consultar desde WhatsApp.",
    "verification": "Automática + humana",
    "suggested_test": "Prueba de consulta y revisión del proceso de verificación de proveedores.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/database/migrations/006_create_services.sql:24"
+     "path": "AppPartaments/appartamentos-backend/tests/db/providerVerification.db.test.js",
+     "note": "Prueba #44: verificación por un admin con evidencia, revocación con motivo, historial de solo inserción y consulta por WhatsApp solo de verificados"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/servicesService.js:67"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/serviceAgent.js:261"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:318"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2244"
+     "path": "AppPartaments/appartamentos-backend/src/services/providerVerification.js",
+     "note": "Flujo de verificación"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Los proveedores se registran con categorías (service_providers.categories) y se pueden consultar desde WhatsApp con la tool get_providers_for_category. Pero no hay proceso de verificación: el auto-registro deja is_verified=false y status 'active', ningún endpoint pone is_verified=TRUE (el admin solo cambia el status), y getProvidersByCategory devuelve también los no verificados. Faltan el flujo de verificación (admin más evidencia), mostrar solo verificados en la consulta por WhatsApp y tests de consulta y verificación."
+     "note": "Los proveedores existentes deben verificarse para volver a salir en WhatsApp; un verificado puede cambiar sus categorías sin reverificación"
     }
    ],
    "verified_by": "",
@@ -3281,30 +3263,23 @@
    "unique": false,
    "tool": null,
    "concept": "c_dash",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "El dashboard muestra tiempo de colocación y conversión de visitas a contratos, y las cifras coinciden con la base de datos.",
    "verification": "Automática",
    "suggested_test": "Cálculo con datos conocidos.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/reports.js:278"
+     "path": "AppPartaments/appartamentos-backend/tests/db/reportsMetrics.db.test.js",
+     "note": "Prueba #58 con datos conocidos: tiempo de colocación y conversión de visitas a contratos, cifras exactas y aisladas por propietario"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/services/reports.js:9"
+     "path": "AppPartaments/appartamentos-backend/src/services/reports.js",
+     "note": "Definiciones: contrato firmado por las dos partes; visita completada"
     },
     {
-     "path": "AppPartaments/appartamentos-dashboard/components/Reports.tsx:202"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/api.js:2313"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/database/migrations/022_property_visits.sql:7"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Hay un dashboard de reportes del propietario (ocupación, ingresos e ingresos proyectados del pipeline, conversión de negociación a acuerdo y días al cierre) y un funnel en el panel admin. Pero no se calcula el 'tiempo de colocación' (de la publicación al arriendo; avg_close_days mide solo la duración de la negociación), ni la 'conversión de visitas a contratos' (property_visits no se cruza con contracts en ningún reporte). reports.js no tiene tests; el único test relacionado valida los conteos de /dashboard/stats con la DB mockeada. Faltan las dos métricas, mostrarlas en el dashboard y un test"
+     "path": "AppPartaments/appartamentos-dashboard/components/Reports.tsx",
+     "note": "Tarjetas «Tiempo de colocación» y «Visitas que terminan en contrato»"
     }
    ],
    "verified_by": "",
