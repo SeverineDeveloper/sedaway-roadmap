@@ -1011,28 +1011,40 @@
    "target": "c_pro",
    "relation": "contradice",
    "conflict": true,
-   "why": "El Documento Ejecutivo dice que se eliminó el modelo SaaS tradicional; el MVP 2.0 y Appartamentos Sedaway lo incluyen como pilar."
+   "why": "El Documento Ejecutivo dice que se eliminó el modelo SaaS tradicional; el MVP 2.0 y Appartamentos Sedaway lo incluyen como pilar.",
+   "resolution": "Se mantiene la Consola Pro para agencias (SaaS) como pilar. Hay que corregir el Documento Ejecutivo.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "d_eje",
    "target": "e20",
    "relation": "adelanta",
    "conflict": true,
-   "why": "El Documento Ejecutivo dice que se está probando el A2A, que en el roadmap va en la Etapa 2.0, después de la seguridad de la 1.2."
+   "why": "El Documento Ejecutivo dice que se está probando el A2A, que en el roadmap va en la Etapa 2.0, después de la seguridad de la 1.2.",
+   "resolution": "El A2A puede probarse, pero no sale a usuarios reales hasta cerrar la seguridad de la Etapa 1.2. Hay que corregir el Documento Ejecutivo.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "d_tec",
    "target": "d_mvp",
    "relation": "difiere de",
    "conflict": true,
-   "why": "La Documentación Técnica usa claude-opus-4-6 y el MVP 2.0 usa claude-sonnet-4-6."
+   "why": "La Documentación Técnica usa claude-opus-4-6 y el MVP 2.0 usa claude-sonnet-4-6.",
+   "resolution": "El agente pasa a claude-sonnet-5-5 (y claude-haiku-5-5 para tareas rápidas). Hay que corregir la Documentación Técnica y el MVP 2.0.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "l_onapi",
    "target": "l_prs",
    "relation": "titularidad dudosa",
    "conflict": true,
-   "why": "El nombre comercial Piantini Ramos Services está registrado a nombre de Hansen Piantini Ramos como persona, no de la sociedad."
+   "why": "El nombre comercial Piantini Ramos Services está registrado a nombre de Hansen Piantini Ramos como persona, no de la sociedad.",
+   "resolution": "Es intencional: el nombre comercial queda a nombre de la persona. Punto cerrado.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "f3",
@@ -1224,28 +1236,40 @@
    "target": "c_contr",
    "relation": "adelanta",
    "conflict": true,
-   "why": "El Catálogo pone la generación de contratos digitales (función 47) en la Etapa 2.0; el MVP 2.0 pone «Contratos digitales con validez legal y firma electrónica» en la Etapa 3.0."
+   "why": "El Catálogo pone la generación de contratos digitales (función 47) en la Etapa 2.0; el MVP 2.0 pone «Contratos digitales con validez legal y firma electrónica» en la Etapa 3.0.",
+   "resolution": "Se separa: generar el contrato es de la Etapa 2.0 (función 47, ya hecha) y la firma electrónica con validez legal es de la 3.0 (función 48). Hay que corregir el MVP 2.0.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "d_cat",
    "target": "e20",
    "relation": "agrega la etapa 2.1",
    "conflict": true,
-   "why": "El Catálogo asigna el marketplace de proveedores (funciones 44–46) a una Etapa 2.1 que el roadmap del MVP 2.0 no tiene: este pasa de la 2.0 a la 3.0 y solo nombra una «Fase 2.1» en la tabla de ingresos."
+   "why": "El Catálogo asigna el marketplace de proveedores (funciones 44–46) a una Etapa 2.1 que el roadmap del MVP 2.0 no tiene: este pasa de la 2.0 a la 3.0 y solo nombra una «Fase 2.1» en la tabla de ingresos.",
+   "resolution": "La Etapa 2.1 se fusiona en la 2.0: el marketplace de proveedores (funciones 44–46) pasa a la 2.0. Hay que corregir el Catálogo.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   },
   {
    "source": "d_cat",
    "target": "c_pro",
    "relation": "precio sin definir",
    "conflict": true,
-   "why": "El Catálogo deja en blanco el precio del plan para agentes inmobiliarios («$$-$$ USD/mes», función 39); el MVP 2.0 lo fija en $49–99 al mes."
+   "why": "El Catálogo deja en blanco el precio del plan para agentes inmobiliarios («$$-$$ USD/mes», función 39); el MVP 2.0 lo fija en $49–99 al mes.",
+   "resolution": "El precio del plan para agencias queda por decidir (función 39 bloqueada por decisión de precio).",
+   "resolved": false,
+   "resolved_at": ""
   },
   {
    "source": "d_cat",
    "target": "c_cumpl",
    "relation": "da por implementado",
    "conflict": true,
-   "why": "El Catálogo marca el cumplimiento de la Ley 172-13 (función 59) como «Implementado», pero el MVP 2.0 está en fase de «Conceptualización y Diseño» y todavía no hay código analizado que lo respalde."
+   "why": "El Catálogo marca el cumplimiento de la Ley 172-13 (función 59) como «Implementado», pero el MVP 2.0 está en fase de «Conceptualización y Diseño» y todavía no hay código analizado que lo respalde.",
+   "resolution": "El cumplimiento de la Ley 172-13 (función 59) está parcial, no implementado. Se completa en código con un texto de consentimiento provisional para revisión del abogado. Hay que corregir el Catálogo.",
+   "resolved": true,
+   "resolved_at": "[número oculto]"
   }
  ],
  "features": [
@@ -2782,7 +2806,7 @@
    "description": "Plomeros, electricistas, mudanzas y otros proveedores verificados dentro de WhatsApp.",
    "category": "H",
    "category_name": "Marketplace de Servicios",
-   "stage": "2.1",
+   "stage": "2.0",
    "unique": false,
    "tool": null,
    "concept": "c_conc",
@@ -2821,7 +2845,7 @@
    "description": "Avería reportada → propietario aprueba → proveedor recibe la orden, en minutos.",
    "category": "H",
    "category_name": "Marketplace de Servicios",
-   "stage": "2.1",
+   "stage": "2.0",
    "unique": true,
    "tool": "coordinate_vendor",
    "concept": "c_conc",
@@ -2864,7 +2888,7 @@
    "description": "Comisión de 15–20% sobre cada transacción del marketplace, cobrada con Stripe.",
    "category": "H",
    "category_name": "Marketplace de Servicios",
-   "stage": "2.1",
+   "stage": "2.0",
    "unique": false,
    "tool": null,
    "concept": "c_conc",

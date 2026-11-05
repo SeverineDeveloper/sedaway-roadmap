@@ -281,13 +281,14 @@
     }
   });
 
-  const conflicts = links.filter((l) => l.conflict);
+  const conflicts = links.filter((l) => l.conflict && !l.resolved);
+  const resolvedConflicts = links.filter((l) => l.conflict && l.resolved);
 
   // Funciones del Catálogo de Servicios: no son nodos, cuelgan de un concepto del grafo
   const features = data.features || [];
   const featuresByConcept = d3.group(features, (f) => f.concept);
-  const STAGES = ["1.1", "1.2", "2.0", "2.1", "3.0", "Continua"];
-  // Etapas del grafo ↔ etapas del catálogo (la 2.1 y «Continua» solo existen en el catálogo)
+  const STAGES = ["1.1", "1.2", "2.0", "3.0", "Continua"];
+  // Etapas del grafo ↔ etapas del catálogo («Continua» solo existe en el catálogo; la 2.1 se fusionó en la 2.0)
   const STAGE_OF_ORDER = { 1: "1.1", 2: "1.2", 3: "2.0", 4: "3.0" };
   // Orden de las barras: de lo más avanzado a lo menos
   const STATUSES = [
@@ -339,7 +340,7 @@
   });
   const linkSel = gLinks.selectAll("path").data(links).join("path")
     .attr("fill", "none")
-    .attr("class", (d) => "link" + (d.conflict ? " conflict" : ""));
+    .attr("class", (d) => "link" + (d.conflict && !d.resolved ? " conflict" : ""));
   linkSel.append("title").text((d) => `${d.source.name} → ${d.relation} → ${d.target.name}${d.why ? "\n" + d.why : ""}`);
 
   const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
@@ -484,7 +485,7 @@
   const nodeBtn = (n) =>
     `<button type="button" class="linkbtn" data-goto="${esc(n.id)}"><span class="dot" style="background:${color(n.type)}"></span>${esc(n.name)}</button>`;
   const conflictCard = (l) =>
-    `<div class="conflict-card">${nodeBtn(l.source)} <span class="rel">${esc(l.relation)}</span> ${nodeBtn(l.target)}<p>${esc(l.why)}</p></div>`;
+    `<div class="conflict-card">${nodeBtn(l.source)} <span class="rel">${esc(l.relation)}</span> ${nodeBtn(l.target)}<p>${esc(l.why)}</p>${l.resolution ? `<p><strong>${l.resolved ? "Resuelto" : "Pendiente"}:</strong> ${esc(l.resolution)}</p>` : ""}</div>`;
 
   const statusDot = (f) => `<i class="sdot" style="background:${STATUS_COLOR[statusOf(f)]}" title="Estado: ${esc(statusOf(f))}" aria-label="Estado: ${esc(statusOf(f))}"></i>`;
   const featureList = (fs) => `<ul class="feat">${fs.map((f) => `
@@ -546,7 +547,8 @@
       <h3>Roadmap</h3>
       <ul class="plain">${roadmap}</ul>
       <h3>Puntos por revisar (${conflicts.length})</h3>
-      ${conflicts.map(conflictCard).join("")}`;
+      ${conflicts.map(conflictCard).join("")}
+      ${resolvedConflicts.length ? `<h3>Puntos resueltos (${resolvedConflicts.length})</h3>${resolvedConflicts.map(conflictCard).join("")}` : ""}`;
   }
 
   function renderNode(n) {
