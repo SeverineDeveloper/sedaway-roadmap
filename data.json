@@ -2614,27 +2614,16 @@
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:38"
+     "path": "AppPartaments/appartamentos-backend/tests/db/apiPartnerIsolation.db.test.js",
+     "note": "Aislamiento entre partners en toda la API v1 (lo ajeno da 404)"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:113"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/v1/properties.js:37"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/agents/router.js:160"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/utils/webhook.js:112"
+     "path": "AppPartaments/appartamentos-backend/src/routes/v1/scope.js",
+     "note": "Reglas de alcance por partner"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Existe la API v1 para partners (API keys con scopes, planes, webhooks) y la personalización por inmobiliaria (nombre del agente, tono, conocimiento) aislada por company_id. Pero: (1) Marca: los mensajes del bot (bienvenida, soporte, referidos), los prompts, las cabeceras de webhooks (X-Appartamentos-*), el User-Agent y la documentación dicen 'Appartamentos'. No hay número de WhatsApp propio por cliente, y la capa de personalización queda subordinada a SedaWay y solo aplica a propietarios con compañía, no a partners de la API. (2) Aislamiento: POST /v1/contracts acepta cualquier negotiation_id,"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Cliente piloto; número de WhatsApp Business/remitente Twilio propio por marca (aprobación de Meta)"
+     "note": "Falta: número de WhatsApp por marca (aprobación de Meta), quitar la marca de los mensajes del bot y del contrato, cliente piloto"
     }
    ],
    "verified_by": "",
@@ -2650,30 +2639,27 @@
    "unique": false,
    "tool": null,
    "concept": "c_api",
-   "status": "parcial",
+   "status": "hecho",
    "acceptance": "El SDK está documentado y una integración de ejemplo funciona en Node.js y Python.",
    "verification": "Automática",
    "suggested_test": "Ejecución de los ejemplos de la documentación.",
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/docs.js:11"
+     "path": "AppPartaments/appartamentos-backend/tests/db/partnerSdk.db.test.js",
+     "note": "Prueba #41: los ejemplos de Node.js y Python se ejecutan contra la API real con una key de prueba"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/docs.js:711"
+     "path": "AppPartaments/sdk/node/README.md",
+     "note": "SDK de Node.js documentado, con verificación de webhooks"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/app.js:259"
+     "path": "AppPartaments/sdk/python/README.md",
+     "note": "SDK de Python (solo biblioteca estándar) documentado"
     },
     {
-     "path": "AppPartaments/appartamentos-backend/src/routes/v1/index.js:17"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/utils/webhook.js:160"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): Solo existe la parte REST: API v1 con spec OpenAPI 3.0 y Swagger UI. En el repo no hay SDK de Node ni de Python: ni paquetes, ni clientes generados, ni ejemplos ejecutables. Además: /api/v1/docs exige API key porque el v1Router (con apiAuthenticate) se monta antes que docsRouter, así que la documentación no se abre en el navegador; la doc promete firma HMAC de webhooks pero dispatchWebhook envía 'unsigned'; y endpoints documentados no funcionan (POST /v1/properties falla por FK; POST /v1/services/requests y ?category= siempre dan 400 por isIn con objetos). Faltan los SDK de Node y Python, los "
+     "path": "AppPartaments/appartamentos-backend/tests/unit/webhookSignature.test.js",
+     "note": "Webhooks firmados con HMAC-SHA256 y ventana de 300 s"
     }
    ],
    "verified_by": "",
@@ -2892,27 +2878,12 @@
    "scope": "Planificado",
    "evidence": [
     {
-     "path": "AppPartaments/appartamentos-backend/src/models/Contract.js:88"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/contracts.js:380"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/contracts.js:480"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/routes/v1/contracts.js:173"
-    },
-    {
-     "path": "AppPartaments/appartamentos-backend/src/utils/contractGenerator.js:563"
+     "path": "AppPartaments/appartamentos-backend/tests/db/contractSignature.db.test.js",
+     "note": "Documento congelado y firmado por su hash, identidad bloqueada tras la primera firma, archivo con reintentos, verificación pública /verify"
     },
     {
      "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Falta (auditoría): La firma es propia: un SHA-256 de (contractId:role:timestamp:ip), no del contenido del documento. No hay proveedor de firma electrónica con validez legal (RD: entidad de certificación acreditada bajo Ley 126-02; EE. UU.: ESIGN/UETA con divulgaciones). La identidad se autodeclara: identity_verified es editable por la propia parte en PUT /:id/identity, que no se bloquea tras la firma y regenera el HTML. En la API v1 un partner puede firmar como cualquiera de las partes. El PDF final se sube a Cloudinary en setImmediate sin reintentos, y la URL /verify citada en el contrato no existe. Sin pruebas"
-    },
-    {
-     "path": "docs/ROADMAP_ESTADO.md",
-     "note": "Dependencia externa: Contrato con proveedor de firma electrónica válido en RD y EE. UU.; confirmación legal"
+     "note": "Falta: proveedor de firma electrónica con validez legal en RD (Ley 126-02), verificación de identidad real y revisión legal de la plantilla"
     }
    ],
    "verified_by": "",
